@@ -1,0 +1,16 @@
+
+build/web/META-INF/context.xml
+build/web/WEB-INF/classes/.netbeans_automatic_build
+build/web/WEB-INF/classes/.netbeans_update_resources
+lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar
+nbproject/build-impl.xml
+nbproject/genfiles.properties
+nbproject/private/private.properties
+src/conf/MANIFEST.MF
+nbproject/project.xml
+web/META-INF/context.xml
+nbproject/ant-deploy.xml
+lib/nblibraries.properties
+build/web/META-INF/MANIFEST.MF
+nbproject/project.properties
+build.xml
