@@ -14,3 +14,4 @@ lib/nblibraries.properties
 build/web/META-INF/MANIFEST.MF
 nbproject/project.properties
 build.xml
+nbproject/private/private.xml
