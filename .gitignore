@@ -15,5 +15,9 @@ nbproject/genfiles.properties
 nbproject/build-impl.xml
 nbproject/ant-deploy.xml
 lib/nblibraries.properties
+build/web/META-INF/MANIFEST.MF
+nbproject/project.properties
+build.xml
+nbproject/private/private.xml
 build/web/index.html
 web/WEB-INF/web.xml
