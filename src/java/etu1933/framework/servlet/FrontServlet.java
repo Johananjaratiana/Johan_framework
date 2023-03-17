@@ -21,18 +21,16 @@ public class FrontServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         String path = getServletContext().getRealPath("/WEB-INF/classes");
+        String package_name = getServletConfig().getInitParameter("package_name");
+        Init init = new Init();
         try {
             this.MappingUrls = new HashMap<>();
-            Init.setUrl(this.MappingUrls, "models", path);
+            init.setUrl(this.MappingUrls,null, package_name, path);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
-    {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
