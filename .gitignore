@@ -47,3 +47,9 @@ build/web/WEB-INF/classes/models/interne/Animaux.class
 build/web/WEB-INF/classes/etu1933/framework/servlet/FrontServlet.class
 web/WEB-INF/web.xml
 web/WEB-INF/web.xml
+build/web/WEB-INF/classes/annotation_J/Url.class
+build/web/WEB-INF/classes/etu1933/framework/servlet/FrontServlet.class
+build/web/WEB-INF/classes/helpers_J/Init.class
+build/web/WEB-INF/classes/models/Personne.class
+build/web/WEB-INF/web.xml
+src/java/annotation_J/Url.java
