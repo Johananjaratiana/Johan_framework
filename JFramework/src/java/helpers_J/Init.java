@@ -32,24 +32,33 @@ public class Init {
     public void make_full(HashMap<String, Mapping> toComplete,File file,String package_anterieur, String package_name) throws ClassNotFoundException {
         // Charger la classe
         String className = file.getName().replace(".class", "");
+        String class_package = "";
         Class<?> loadedClass = null;
         if(package_anterieur != null && package_name != null)
         {
-            loadedClass = Class.forName(package_anterieur+"."+package_name+"."+className);
+            class_package = package_anterieur+"."+package_name+"."+className;
+            loadedClass = Class.forName(class_package);
         }
         else if (package_name != null)
         {
-            loadedClass = Class.forName(package_name+"."+className);
+            class_package = package_name+"."+className;
+            loadedClass = Class.forName(class_package);
         }
-        else loadedClass = Class.forName(className);
+        else 
+        {
+            class_package = className;
+            loadedClass = Class.forName(class_package);
+        }
 
         // Inspecter les annotations de chaque méthode
         Method[] methods = loadedClass.getDeclaredMethods();
-        for (Method method : methods) {
-            if(method.isAnnotationPresent(Url.class)){
+        for (Method method : methods) 
+        {
+            if(method.isAnnotationPresent(Url.class))
+            {
                 Url annotation = method.getAnnotation(Url.class);
                 String url = annotation.class_method();
-                Mapping mapping = new Mapping(className, method.getName());
+                Mapping mapping = new Mapping(class_package, method.getName());
                 toComplete.put(url,mapping);
             }
         }

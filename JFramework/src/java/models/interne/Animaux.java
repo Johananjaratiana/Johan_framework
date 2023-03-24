@@ -14,7 +14,7 @@ public class Animaux {
     @Url(class_method = "Animaux-find_all")
     public ModelView find_all(){
         ModelView mv = new ModelView();
-        mv.setView("HelloWord.jsp");
+        mv.setView("page1.jsp");
         return mv;
     }
     

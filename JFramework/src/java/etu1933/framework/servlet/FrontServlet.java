@@ -1,13 +1,17 @@
 package etu1933.framework.servlet;
 
 import etu1933.framework.Mapping;
+import etu1933.framework.view.ModelView;
 import helpers_J.Init;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +20,53 @@ import javax.servlet.http.HttpServletResponse;
 public class FrontServlet extends HttpServlet {
     
     HashMap<String,Mapping> MappingUrls;
+    
+    
+    public String getView(Mapping map) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
+    {
+        try
+        {
+            Class<?> classe = Class.forName(map.getClassName());
+            Object instance = classe.newInstance();
+            Method methode = classe.getMethod(map.getMethod());
+            ModelView modelview  = (ModelView)(methode.invoke(instance));
+            return modelview.getView();
+        }
+        catch(Exception ex) {return null;}
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, ClassNotFoundException {
+        try{
+            String view = request.getServletPath();
+            String valeur = "";
+            if(view != null)
+            {
+                String[] elements = view.split("/"); // Ca debute avec 1
+                valeur = elements[1];
+                Mapping views = this.MappingUrls.get(valeur);
+                String page = this.getView(views);
+                if(page != null)
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+                    dispatcher.include(request, response);
+                }
+                else
+                {
+                    this.error(request,response);
+                }
+            }
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     @Override
     public void init() throws ServletException {
@@ -30,8 +81,28 @@ public class FrontServlet extends HttpServlet {
             Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+    {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+    {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void error(HttpServletRequest request, HttpServletResponse response) throws IOException{
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
@@ -63,15 +134,5 @@ public class FrontServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
         }
-    }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
-    {
-        processRequest(request, response);
-    }
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
-    {
-        processRequest(request, response);
     }
 }
