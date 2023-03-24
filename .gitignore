@@ -53,3 +53,8 @@ build/web/WEB-INF/classes/helpers_J/Init.class
 build/web/WEB-INF/classes/models/Personne.class
 build/web/WEB-INF/web.xml
 src/java/annotation_J/Url.java
+/Base/build/
+/JTeste/nbproject/private/
+/JTeste/build/
+/Temporaire/build/
+/Temporaire/nbproject/private/
