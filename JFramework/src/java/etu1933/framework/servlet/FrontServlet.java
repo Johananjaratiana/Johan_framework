@@ -22,7 +22,7 @@ public class FrontServlet extends HttpServlet {
     HashMap<String,Mapping> MappingUrls;
     
     
-    public String getView(Mapping map) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
+    public ModelView getView(Mapping map) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
     {
         try
         {
@@ -30,7 +30,7 @@ public class FrontServlet extends HttpServlet {
             Object instance = classe.newInstance();
             Method methode = classe.getMethod(map.getMethod());
             ModelView modelview  = (ModelView)(methode.invoke(instance));
-            return modelview.getView();
+            return modelview;
         }
         catch(Exception ex) {return null;}
     }
@@ -44,9 +44,11 @@ public class FrontServlet extends HttpServlet {
                 String[] elements = view.split("/"); // Ca debute avec 1
                 valeur = elements[1];
                 Mapping views = this.MappingUrls.get(valeur);
-                String page = this.getView(views);
-                if(page != null)
+                ModelView modelview = this.getView(views);// Le modelview trouver
+                if(modelview != null)
                 {
+                    modelview.sendData(request, response);// Envoie du data
+                    String page = modelview.getView();
                     RequestDispatcher dispatcher = request.getRequestDispatcher(page);
                     dispatcher.include(request, response);
                 }
