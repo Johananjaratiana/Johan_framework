@@ -9,7 +9,7 @@ import etu1933.framework.Mapping;
 
 public class Init {
     
-       public void setUrl(HashMap<String, Mapping> toComplete,String package_anterieur,  String package_name, String path_classes) throws ClassNotFoundException {
+    public void setUrl(HashMap<String, Mapping> toComplete,String package_anterieur,  String package_name, String path_classes) throws ClassNotFoundException {
         String pathToClasses = path_classes;
         if(package_name!=null) pathToClasses += "/"+package_name;
 
