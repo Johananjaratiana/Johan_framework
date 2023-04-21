@@ -2,6 +2,7 @@ package etu1933.framework.servlet;
 
 import etu1933.framework.Mapping;
 import etu1933.framework.view.ModelView;
+import helpers_J.Formulaire;
 import helpers_J.Init;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,52 +22,68 @@ public class FrontServlet extends HttpServlet {
     
     HashMap<String,Mapping> MappingUrls;
     
+    public Mapping getMapping(HttpServletRequest request){
+        try{
+            String servlet_path = request.getServletPath();
+            String valeur = "";
+            if(servlet_path != null)
+            {
+                String[] elements = servlet_path.split("/"); // Ca debute avec 1
+                valeur = elements[1];
+                Mapping mapping = this.MappingUrls.get(valeur);
+                return mapping;
+            }
+            return null;
+        }catch(Exception e){
+            return null;
+        }
+    }
     
-    public ModelView getView(Mapping map) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
+    public ModelView getModelView(Mapping mapping) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException
     {
         try
         {
-            Class<?> classe = Class.forName(map.getClassName());
+            Class<?> classe = Class.forName(mapping.getClassName());
             Object instance = classe.newInstance();
-            Method methode = classe.getMethod(map.getMethod());
+            Method methode = classe.getMethod(mapping.getMethod());
             ModelView modelview  = (ModelView)(methode.invoke(instance));
             return modelview;
         }
         catch(Exception ex) {return null;}
     }
+    
+    public boolean testModelView(Mapping mapping,HttpServletRequest request, HttpServletResponse response){
+        try{
+            ModelView modelview = this.getModelView(mapping);// trouver le lien mapping
+            if(modelview == null)return false;
+            modelview.sendData(request, response);// Envoie du data
+            String page = modelview.getView();
+            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+            dispatcher.include(request, response);
+            return true;
+        }catch(Exception ex){
+            return false;
+        }
+    }
+    
+    public boolean testUseObjectFonction(Mapping mapping,HttpServletRequest request, HttpServletResponse response)throws Exception{
+        try{
+            return Formulaire.formulaire_object(mapping, request, response);
+        }catch(Exception ex){
+            return false;
+        }
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, ClassNotFoundException {
         try{
-            String view = request.getServletPath();
-            String valeur = "";
-            if(view != null)
-            {
-                String[] elements = view.split("/"); // Ca debute avec 1
-                valeur = elements[1];
-                Mapping views = this.MappingUrls.get(valeur);
-                ModelView modelview = this.getView(views);// Le modelview trouver
-                if(modelview != null)
-                {
-                    modelview.sendData(request, response);// Envoie du data
-                    String page = modelview.getView();
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-                    dispatcher.include(request, response);
-                }
-                else
-                {
+            Mapping mapping = this.getMapping(request);
+            if(!this.testUseObjectFonction(mapping, request, response)){
+                if(!this.testModelView(mapping, request, response)){
                     this.error(request,response);
                 }
             }
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }catch(Exception ex){
+             this.error(request,response);
         }
     }
     
