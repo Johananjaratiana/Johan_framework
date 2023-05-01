@@ -1,5 +1,6 @@
 package models;
 
+import annotation_J.ParameterName;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
 import java.util.Date;
@@ -66,9 +67,10 @@ public class Person {
         return mv;
     }
     @Url(class_method = "Person-save")
-    public void save(){
+    @ParameterName(paramsName = "classNumber-dateNaissance")
+    public void save(double your_class_number, Date dateNaissance){
+        System.out.println("Class number : "+your_class_number+"\nDate sending :"+dateNaissance);
         System.out.println("Nom :" + this.nom +"\nDate de naissance"+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
     }
-    
 }
