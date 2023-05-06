@@ -1,13 +1,15 @@
 package helpers_J;
 
-import annotation_J.ParameterName;
 import etu1933.framework.Mapping;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
@@ -28,8 +30,8 @@ public class Formulaire {
                 String paramName = parameterNames.nextElement();
                 Formulaire.verified_casting_and_set(class_temp, paramName, instance, request.getParameter(paramName));
             }
-            Method method = methodParamsType(class_temp, mapping.getMethod());
-            String[] methodParamsName = methodParamsName(method);
+            Method method = getMethod(class_temp, mapping.getMethod());
+            String[] methodParamsName = methodParamsName(class_temp,method);
             Object[] args = methodArgs(method.getParameterTypes(), methodParamsName, request);
             method.invoke(instance, args);
             return true;
@@ -71,8 +73,7 @@ public class Formulaire {
         }
     }
     
-    public static Method methodParamsType(Class<?> cls, String methodName){
-        Method method = null;
+    public static Method getMethod(Class<?> cls, String methodName){
         for (Method m : cls.getDeclaredMethods()) {
             if (m.getName().equals(methodName)) {
                 return m;
@@ -81,13 +82,13 @@ public class Formulaire {
         return null;
     }
     
-    public static String[] methodParamsName(Method method){
-        if(method.isAnnotationPresent(ParameterName.class)){
-            ParameterName myAnnotation = method.getAnnotation(ParameterName.class);
-            String all_param = myAnnotation.paramsName();
-            return all_param.split("-");
-        }
-        return new String[0];
+    public static String[] methodParamsName(Class<?> classe, Method method){
+        Parameter[] parameters = method.getParameters();
+        List<Parameter> parameterList = Arrays.asList(parameters);
+        String[] parameterNames = parameterList.stream()
+                    .map(p -> p.getName())
+                    .toArray(String[]::new);
+        return parameterNames;
     }
     
     public static Object[] methodArgs(Class<?>[] paramsTypes, String[] paramsName, HttpServletRequest request) throws ParseException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{

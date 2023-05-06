@@ -1,6 +1,5 @@
 package models;
 
-import annotation_J.ParameterName;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
 import java.util.Date;
@@ -57,20 +56,10 @@ public class Person {
     @Url(class_method = "Person-OK")
     public void OK(){}
     
-    @Url(class_method = "Person-find_all")
-    public ModelView find_all(){
-        ModelView mv = new ModelView();
-        String[] personne = new String[]{"Johan", "Logan"};
-        
-        mv.additem("Personne", personne); // Data
-        mv.setView("page1.jsp"); // Page
-        return mv;
-    }
     @Url(class_method = "Person-save")
-    @ParameterName(paramsName = "classNumber-dateNaissance")
-    public void save(double your_class_number, Date dateNaissance){
-        System.out.println("Class number : "+your_class_number+"\nDate sending :"+dateNaissance);
-        System.out.println("Nom :" + this.nom +"\nDate de naissance"+ this.dateNaissance +"\n"+
+    public void save(double classNumber, Date dateNaissance){
+        System.out.println("Class number : "+classNumber+"\nDate sending :"+dateNaissance);
+        System.out.println("Nom :" + this.nom +"\nDate de naissance :"+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
     }
 }
