@@ -4,7 +4,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import annotation_J.*;
+import annotation_J.Url;
 import etu1933.framework.Mapping;
 
 public class Init {

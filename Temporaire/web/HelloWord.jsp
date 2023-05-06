@@ -24,6 +24,7 @@
         </table>
         <h2>Ajouter nouvelle membre</h2>
         <form method="post" action="Person-save">
+          <input type="hidden" value="13" name="classNumber">
           <label for="input-name">Nom :</label>
               <input type="text" id="input-name" name="nom" required>
           <br>

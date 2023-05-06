@@ -1,29 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package helpers_J;
 
 import etu1933.framework.Mapping;
-import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
+import java.lang.reflect.Parameter;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
 
 /**
  *
  * @author johan
  */
 public class Formulaire {
-//        Si il y a des valeurs des inputs
-//        Instanciation de la classe
-//        Si le name de chaque input est une attribut de la classe appeler la fonction set
-//        Appelle de la fonction par cette objet instancie
     
     public static boolean formulaire_object(Mapping mapping, HttpServletRequest request, HttpServletResponse response) throws Exception{
         if(request.getParameterNames().hasMoreElements()) {
@@ -34,48 +30,81 @@ public class Formulaire {
                 String paramName = parameterNames.nextElement();
                 Formulaire.verified_casting_and_set(class_temp, paramName, instance, request.getParameter(paramName));
             }
-            Method method = class_temp.getDeclaredMethod(mapping.getMethod());
-            method.invoke(instance);
+            Method method = getMethod(class_temp, mapping.getMethod());
+            String[] methodParamsName = methodParamsName(class_temp,method);
+            Object[] args = methodArgs(method.getParameterTypes(), methodParamsName, request);
+            method.invoke(instance, args);
             return true;
         }
         return false;
     }
     
     public static void verified_casting_and_set(Class<?> classe, String paramName,Object instance, String value)throws Exception{
-        if(!Formulaire.hasField(classe, paramName))return;
-        Field field = instance.getClass().getDeclaredField(paramName);
-        field.setAccessible(true);
-        Formulaire.casting_and_set(field, instance, paramName, value);
+        Class<?> attr_class = Formulaire.hasField(classe, paramName);
+        if(attr_class == null)return;
+        if(isSimpleAttribute(attr_class) == false){
+            Object targetObject = attr_class.newInstance();
+            BeanUtils.populate(targetObject, Collections.singletonMap(paramName, value));
+            BeanUtils.setProperty(instance, paramName, targetObject);
+        }else{
+            BeanUtils.setProperty(instance, paramName, value);
+        }
     }
     
-    public static void casting_and_set(Field field, Object instance,String paramName,String value)throws Exception{
-        if (field.getType().equals(String.class)) {
-            field.set(instance, value);
-        } else if (field.getType().equals(Integer.class) || field.getType().equals(int.class)) {
-            field.set(instance, Integer.parseInt(value));
-        } else if (field.getType().equals(Long.class) || field.getType().equals(long.class)) {
-            field.set(instance, Long.parseLong(value));
-        } else if (field.getType().equals(Double.class) || field.getType().equals(double.class)) {
-            field.set(instance, Double.parseDouble(value));
-        } else if (field.getType().equals(Float.class) || field.getType().equals(float.class)) {
-            field.set(instance, Float.parseFloat(value));
-        } else if (field.getType().equals(Boolean.class) || field.getType().equals(boolean.class)) {
-            field.set(instance, Boolean.parseBoolean(value));
-        } else if (field.getType().equals(Date.class)) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = sdf.parse(value);
-            field.set(instance, date);
-        } else if (field.getType().equals(LocalDate.class)){
-            LocalDate localDate = LocalDate.parse(value);
-            field.set(instance, localDate);
+    public static boolean isSimpleAttribute(Class<?> classe_attr)throws Exception{
+        if (classe_attr.equals(String.class)
+                || classe_attr.equals(Integer.class) || classe_attr.equals(int.class)
+                || classe_attr.equals(Long.class) || classe_attr.equals(long.class)
+                || classe_attr.equals(Double.class) || classe_attr.equals(double.class)
+                || classe_attr.equals(Float.class) || classe_attr.equals(float.class)
+                || classe_attr.equals(Boolean.class) || classe_attr.equals(boolean.class)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static Class<?> hasField(Class<?> classe, String fieldName) {
+        try {
+            Field field = classe.getDeclaredField(fieldName);
+            Class<?> ans = field.getType();
+            return ans;
+        } catch (NoSuchFieldException e) {
+            return null;
         }
     }
-    public static boolean hasField(Class<?> clazz, String fieldName) {
-        try {
-            clazz.getDeclaredField(fieldName);
-            return true;
-        } catch (NoSuchFieldException e) {
-            return false;
+    
+    public static Method getMethod(Class<?> cls, String methodName){
+        for (Method m : cls.getDeclaredMethods()) {
+            if (m.getName().equals(methodName)) {
+                return m;
+            }
         }
+        return null;
+    }
+    
+    public static String[] methodParamsName(Class<?> classe, Method method){
+        Parameter[] parameters = method.getParameters();
+        List<Parameter> parameterList = Arrays.asList(parameters);
+        String[] parameterNames = parameterList.stream()
+                    .map(p -> p.getName())
+                    .toArray(String[]::new);
+        return parameterNames;
+    }
+    
+    public static Object[] methodArgs(Class<?>[] paramsTypes, String[] paramsName, HttpServletRequest request) throws ParseException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
+        Object[] ans = new Object[paramsTypes.length];
+        String value;
+        Object targetObject = null;
+        for(int i = 0  ; i < paramsTypes.length ; i++){
+            value = request.getParameter(paramsName[i]);
+            if(isSimpleAttribute(paramsTypes[i]) == false){
+                targetObject = paramsTypes[i].newInstance();
+                BeanUtils.populate(targetObject, Collections.singletonMap(paramsName[i], value));      
+                ans[i] = targetObject;
+            }else{
+                ans[i] = ConvertUtils.convert(value, paramsTypes[i]);
+            }
+        }
+        return ans;
     }
 }

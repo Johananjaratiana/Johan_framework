@@ -56,19 +56,10 @@ public class Person {
     @Url(class_method = "Person-OK")
     public void OK(){}
     
-    @Url(class_method = "Person-find_all")
-    public ModelView find_all(){
-        ModelView mv = new ModelView();
-        String[] personne = new String[]{"Johan", "Logan"};
-        
-        mv.additem("Personne", personne); // Data
-        mv.setView("page1.jsp"); // Page
-        return mv;
-    }
     @Url(class_method = "Person-save")
-    public void save(){
-        System.out.println("Nom :" + this.nom +"\nDate de naissance"+ this.dateNaissance +"\n"+
+    public void save(double classNumber, Date dateNaissance){
+        System.out.println("Class number : "+classNumber+"\nDate sending :"+dateNaissance);
+        System.out.println("Nom :" + this.nom +"\nDate de naissance :"+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
     }
-    
 }
