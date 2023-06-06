@@ -1,17 +1,17 @@
 package etu1933.framework.view;
 
-import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-public class ModelView<T> {
+import java.util.HashMap;
+public class ModelView {
     String view;
-    HashMap<String, T> data;
+    HashMap<String, Object> data;
 
-    public HashMap<String, T> getData() {
+    public HashMap<String, Object> getData() {
         return data;
     }
 
-    public void setData(HashMap<String, T> data) {
+    public void setData(HashMap<String, Object> data) {
         this.data = data;
     }
 
@@ -19,7 +19,7 @@ public class ModelView<T> {
         return view;
     }
 
-    public ModelView<T> setView(String view) {
+    public ModelView setView(String view) {
         this.view = view;
         return this;
     }
@@ -28,7 +28,7 @@ public class ModelView<T> {
         this.setData(new HashMap<>());
     }
 
-    public void additem(String key, T value){
+    public void additem(String key, Object value){
         this.getData().put(key,value);
     }
 

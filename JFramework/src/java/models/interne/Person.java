@@ -44,16 +44,9 @@ public class Person {
         this.adresse = adresse;
     }
     
-    
-   
-    @Url(class_method = "Person-manger")
-    public void manger(){}
-
-    @Url(class_method = "Person-OK")
-    public void OK(){}
-    
     @Url(class_method = "Person-find_all")
-    public ModelView find_all(){
+    public ModelView find_all()
+    {
         ModelView mv = new ModelView();
         String[] personne = new String[]{"Johan", "Logan"};
         
@@ -62,11 +55,26 @@ public class Person {
         return mv;
     }
     @Url(class_method = "Person-save")
+<<<<<<< Updated upstream
     @ParameterName(paramsName = "classNumber-dateNaissance")
     public void save(Integer your_class_number, Date dateNaissance){
         System.out.println("Class number : "+your_class_number+"\nDate sending :"+dateNaissance);
+=======
+    public void save(Integer classNumber, Date dateNaissance)
+    {
+        System.out.println("Class number : "+classNumber+"\nDate sending :"+dateNaissance);
+>>>>>>> Stashed changes
         System.out.println("Nom :" + this.nom +"\nDate de naissance : "+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
+    }
+    @Url(class_method = "Person-tableau")
+    public void tableau(java.sql.Date[] nom, String null_able)
+    {
+        for (int i = 0 ;  i < nom.length ; i++)
+        {
+            System.out.println("Nom " + i + " : " + nom[i]);
+        }
+        System.out.println("null_able : " + null_able);
     }
     
 }

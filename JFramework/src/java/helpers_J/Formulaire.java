@@ -2,33 +2,49 @@ package helpers_J;
 
 import annotation_J.ParameterName;
 import etu1933.framework.Mapping;
+<<<<<<< Updated upstream
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Enumeration;
+=======
+
+>>>>>>> Stashed changes
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConvertUtils;
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.util.Enumeration;
+
+import static helpers_J.MyCast.MyCasting;
 
 /**
  *
  * @author johan
  */
 public class Formulaire {
-    
-    public static boolean formulaire_object(Mapping mapping, HttpServletRequest request, HttpServletResponse response) throws Exception{
-        if(request.getParameterNames().hasMoreElements()) {
+
+    public static boolean formulaire_object(Mapping mapping, HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        if(request.getParameterNames().hasMoreElements())
+        {
             Class<?> class_temp = Class.forName(mapping.getClassName());
-            Object instance = class_temp.newInstance();
+            Object instance = class_temp.getDeclaredConstructor().newInstance();
             Enumeration<String> parameterNames = request.getParameterNames();
-            while(parameterNames.hasMoreElements()) {
+
+            while(parameterNames.hasMoreElements())
+            {
                 String paramName = parameterNames.nextElement();
-                Formulaire.verified_casting_and_set(class_temp, paramName, instance, request.getParameter(paramName));
+                MyCast.verified_casting_and_set(class_temp, paramName, instance, request.getParameter(paramName));
             }
+<<<<<<< Updated upstream
             Method method = methodParamsType(class_temp, mapping.getMethod());
+=======
+
+            Method method = getMethod(class_temp, mapping.getMethod());
+>>>>>>> Stashed changes
             String[] methodParamsName = methodParamsName(method);
             Object[] args = methodArgs(method.getParameterTypes(), methodParamsName, request);
             method.invoke(instance, args);
@@ -37,6 +53,7 @@ public class Formulaire {
         return false;
     }
     
+<<<<<<< Updated upstream
     public static void verified_casting_and_set(Class<?> classe, String paramName,Object instance, String value)throws Exception{
         Class<?> attr_class = Formulaire.hasField(classe, paramName);
         if(attr_class == null)return;
@@ -75,12 +92,21 @@ public class Formulaire {
         Method method = null;
         for (Method m : cls.getDeclaredMethods()) {
             if (m.getName().equals(methodName)) {
+=======
+    private static Method getMethod(Class<?> cls, String methodName)
+    {
+        for (Method m : cls.getDeclaredMethods())
+        {
+            if (m.getName().equals(methodName))
+            {
+>>>>>>> Stashed changes
                 return m;
             }
         }
         return null;
     }
     
+<<<<<<< Updated upstream
     public static String[] methodParamsName(Method method){
         if(method.isAnnotationPresent(ParameterName.class)){
             ParameterName myAnnotation = method.getAnnotation(ParameterName.class);
@@ -88,20 +114,44 @@ public class Formulaire {
             return all_param.split("-");
         }
         return new String[0];
+=======
+    private static String[] methodParamsName(Method method)
+    {
+        try {
+            return ArgumentNamesExtractor.getArgumentNames(method);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+>>>>>>> Stashed changes
     }
-    
-    public static Object[] methodArgs(Class<?>[] paramsTypes, String[] paramsName, HttpServletRequest request) throws ParseException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
+    private static Object[] methodArgs(Class<?>[] paramsTypes, String[] paramsName, HttpServletRequest request) throws Exception
+    {
         Object[] ans = new Object[paramsTypes.length];
         String value;
         Object targetObject = null;
-        for(int i = 0  ; i < paramsTypes.length ; i++){
-            value = request.getParameter(paramsName[i]);
-            if(isSimpleAttribute(paramsTypes[i]) == false){
-                targetObject = paramsTypes[i].newInstance();
-                BeanUtils.populate(targetObject, Collections.singletonMap(paramsName[i], value));      
-                ans[i] = targetObject;
-            }else{
-                ans[i] = ConvertUtils.convert(value, paramsTypes[i]);
+        for(int i = 0  ; i < paramsTypes.length ; i++)
+        {
+            if (paramsTypes[i].isArray())
+            {
+                String[] parameterValues = request.getParameterValues(paramsName[i] + "[]");
+                if(parameterValues == null)ans[i] = null;
+                else
+                {
+                    Class<?> componentType = paramsTypes[i].getComponentType();
+                    Object array = Array.newInstance(componentType, parameterValues.length);
+                    for (int j = 0; j < parameterValues.length; j++)
+                    {
+                        targetObject = MyCast.MyCasting(componentType, parameterValues[j]);
+                        Array.set(array, j, targetObject);
+                    }
+                    ans[i] = array;
+                }
+            }
+            else
+            {
+                value = request.getParameter(paramsName[i]);
+                if(value == null)ans[i] = null;
+                else ans[i] = MyCasting(paramsTypes[i], value);
             }
         }
         return ans;
