@@ -3,13 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/helpers_J/Init.java</file>
-            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/etu1933/framework/servlet/FrontServlet.java</file>
-            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/annotation_J/Url.java</file>
-            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/etu1933/framework/Mapping.java</file>
-            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/etu1933/framework/view/ModelView.java</file>
-            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/helpers_J/Formulaire.java</file>
+<<<<<<< Updated upstream
             <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/README.md</file>
+=======
+            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/etu1933/framework/servlet/StaticContentServlet.java</file>
+            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/etu1933/framework/servlet/FrontServlet.java</file>
+            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/src/java/models/interne/Person.java</file>
+            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/web/page1.jsp</file>
+            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/web/WEB-INF/web.xml</file>
+            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/web/assets/css/index.css</file>
+            <file>file:/home/johan/Documents/Programmation/Naina/Framework/JFramework/nbproject/build-impl.xml</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>

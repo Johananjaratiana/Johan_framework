@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1c06f7be-7f33-493b-9fa3-40353f527541" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/ant.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/artifacts/JFramework_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/libraries/asm_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/libraries/commons_beanutils.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/libraries/servlet_api.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/JFramework.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/src/java/etu1933/framework/file/FileUpload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/src/java/helpers_J/ArgumentNamesExtractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JFramework/src/java/helpers_J/MyCast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/META-INF/context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/.netbeans_automatic_build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/.netbeans_update_resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/NOTICE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/RELEASE-NOTES.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/annotation_J/ParameterName.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/annotation_J/Url.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/allclasses-frame.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/allclasses-noframe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/constant-values.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/deprecated-list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/help-doc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/index-all.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/Log.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/LogConfigurationException.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/LogFactory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/LogSource.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/class-use/Log.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/class-use/LogConfigurationException.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/class-use/LogFactory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/class-use/LogSource.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/AvalonLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/Jdk13LumberjackLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/Jdk14Logger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/Log4JLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/LogFactoryImpl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/LogKitLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/NoOpLog.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/ServletContextCleaner.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/SimpleLog.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/WeakHashtable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/AvalonLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/Jdk13LumberjackLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/Jdk14Logger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/Log4JLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/LogFactoryImpl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/LogKitLogger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/NoOpLog.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/ServletContextCleaner.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/SimpleLog.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/class-use/WeakHashtable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/package-frame.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/impl/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/package-frame.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/org/apache/commons/logging/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/overview-frame.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/overview-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/overview-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/package-list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/resources/background.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/resources/tab.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/resources/titlebar.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/resources/titlebar_end.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/serialized-form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/apidocs/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/commons-logging-1.2-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/commons-logging-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/etu1933/framework/Mapping.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/etu1933/framework/servlet/FrontServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/etu1933/framework/view/ModelView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/helpers_J/Formulaire.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/helpers_J/Init.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/classes/models/interne/Person.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/lib/commons-beanutils-1.9.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/lib/commons-collections-3.2.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/lib/commons-logging-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/build/web/page1.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/lib/commons-beanutils-1.9.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/lib/commons-collections-3.2.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/lib/commons-logging-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/lib/nblibraries.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/nbproject/ant-deploy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/nbproject/ant-deploy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/nbproject/build-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/nbproject/build-impl.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/nbproject/genfiles.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/nbproject/genfiles.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/nbproject/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/nbproject/project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/conf/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/conf/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/annotation_J/ParameterName.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/annotation_J/Url.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/java/annotation_J/Url.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/etu1933/framework/Mapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/java/etu1933/framework/Mapping.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/etu1933/framework/servlet/FrontServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/java/etu1933/framework/servlet/FrontServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/etu1933/framework/view/ModelView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/java/etu1933/framework/view/ModelView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/helpers_J/Formulaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/java/helpers_J/Formulaire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/helpers_J/Init.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/java/helpers_J/Init.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/src/java/models/interne/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/src/java/models/interne/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/web/META-INF/context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/web/META-INF/context.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JFramework/web/page1.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../JFramework/web/page1.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/JFramework.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/commons-beanutils-1.9.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/commons-collections-3.2.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/commons-logging-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/nblibraries.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/ant-deploy.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/build-impl.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/genfiles.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/conf/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/models/Person.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/models/interne/MyModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/servlet/FirstServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/HelloWord.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/HelloWord.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/META-INF/context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../script.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../script.sh" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QadJ8Rjbbth9L56C3lWdOmtyav" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/johan/Documents/Programmation/Naina/Framework/JFramework",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Temporaire" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.58 (Ubuntu)" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="11">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="afa742f2-8c47-4486-bbcd-2d107f903b27" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="44033" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1c06f7be-7f33-493b-9fa3-40353f527541" name="Changes" comment="" />
+      <created>1685595551778</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685595551778</updated>
+      <workItem from="1685595553069" duration="1568000" />
+      <workItem from="1686028067790" duration="325000" />
+      <workItem from="1686030447214" duration="20000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

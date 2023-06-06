@@ -1,15 +1,22 @@
 package helpers_J;
 
+import annotation_J.Url;
+import etu1933.framework.Mapping;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import annotation_J.Url;
+<<<<<<< Updated upstream
+import annotation_J.*;
 import etu1933.framework.Mapping;
 
+=======
+>>>>>>> Stashed changes
 public class Init {
     
-    public void setUrl(HashMap<String, Mapping> toComplete,String package_anterieur,  String package_name, String path_classes) throws ClassNotFoundException {
+    public void setUrl(HashMap<String, Mapping> toComplete,String package_anterieur,  String package_name, String path_classes) throws ClassNotFoundException
+    {
         String pathToClasses = path_classes;
         if(package_name!=null) pathToClasses += "/"+package_name;
 
@@ -29,7 +36,8 @@ public class Init {
             }
         }
     }
-    public void make_full(HashMap<String, Mapping> toComplete,File file,String package_anterieur, String package_name) throws ClassNotFoundException {
+    public void make_full(HashMap<String, Mapping> toComplete,File file,String package_anterieur, String package_name) throws ClassNotFoundException
+    {
         // Charger la classe
         String className = file.getName().replace(".class", "");
         String class_package = "";
