@@ -1,6 +1,7 @@
 package etu1933.framework.servlet;
 
 import etu1933.framework.Mapping;
+import etu1933.framework.Singleton;
 import etu1933.framework.file.FileUpload;
 import etu1933.framework.view.ModelView;
 import helpers_J.Formulaire;
@@ -31,6 +32,7 @@ import java.util.logging.Logger;
 public class FrontServlet extends HttpServlet
 {
     HashMap<String,Mapping> MappingUrls;
+    HashMap<String,Object> Singletons;
     ArrayList<FileUpload> fileUploads;
 
     public Mapping getMapping(HttpServletRequest request)
@@ -59,7 +61,9 @@ public class FrontServlet extends HttpServlet
         try
         {
             Class<?> classe = Class.forName(mapping.getClassName());
-            Object instance = classe.getDeclaredConstructor().newInstance();
+            Object instance = Singleton.getOrInitSingleton(Singletons,  classe.getName());
+            if(instance == null)instance = classe.getDeclaredConstructor().newInstance();
+
             Method methode = classe.getMethod(mapping.getMethod());
             ModelView modelview  = (ModelView)(methode.invoke(instance));
             return modelview;
@@ -91,7 +95,7 @@ public class FrontServlet extends HttpServlet
     {
         try
         {
-            return Formulaire.formulaire_object(mapping, request, response);
+            return Formulaire.formulaire_object(mapping, this.Singletons,request, response);
         }
         catch(Exception ex)
         {
@@ -126,15 +130,20 @@ public class FrontServlet extends HttpServlet
         super.init();
         String path = getServletContext().getRealPath("/WEB-INF/classes");
         String package_name = getServletConfig().getInitParameter("package_name");
-        Init init = new Init();
         try
         {
             this.MappingUrls = new HashMap<>();
-            init.setUrl(this.MappingUrls,null, package_name, path);
+            this.Singletons = new HashMap<>();
+            Init.setUrl_and_Singleton(this.MappingUrls,this.Singletons,null, package_name, path);
         }
         catch (ClassNotFoundException ex)
         {
             Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
     @Override

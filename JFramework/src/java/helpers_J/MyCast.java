@@ -29,7 +29,7 @@ public class MyCast
             BeanUtils.setProperty(instance, paramName, value);
         }
     }
-    static <T> T MyCasting(Class<T> targetType, String value) throws Exception
+    public static <T> T MyCasting(Class<T> targetType, String value) throws Exception
     {
         Class<?> casting_type_object = getClassType(targetType);
         if(casting_type_object == String.class)

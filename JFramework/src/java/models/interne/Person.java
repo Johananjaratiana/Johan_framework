@@ -1,16 +1,18 @@
 package models.interne;
 
-import annotation_J.ParameterName;
+import annotation_J.Scope;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
-import java.time.LocalDate;
 import java.util.Date;
 
-public class Person {
+@Scope(SingleTon = false)
+public class Person
+{
     String nom;
     Date dateNaissance;
     String email;
     Float adresse;
+    int count = 0;
 
     public String getNom() {
         return nom;
@@ -55,15 +57,8 @@ public class Person {
         return mv;
     }
     @Url(class_method = "Person-save")
-<<<<<<< Updated upstream
-    @ParameterName(paramsName = "classNumber-dateNaissance")
     public void save(Integer your_class_number, Date dateNaissance){
         System.out.println("Class number : "+your_class_number+"\nDate sending :"+dateNaissance);
-=======
-    public void save(Integer classNumber, Date dateNaissance)
-    {
-        System.out.println("Class number : "+classNumber+"\nDate sending :"+dateNaissance);
->>>>>>> Stashed changes
         System.out.println("Nom :" + this.nom +"\nDate de naissance : "+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
     }
@@ -75,6 +70,13 @@ public class Person {
             System.out.println("Nom " + i + " : " + nom[i]);
         }
         System.out.println("null_able : " + null_able);
+    }
+
+    @Url(class_method = "Person-count")
+    public void count()
+    {
+        this.count += 1;
+        System.out.println(this.count + "------------------- Normale counter -----------------");
     }
     
 }
