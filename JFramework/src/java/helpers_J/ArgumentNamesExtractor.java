@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 
 public class ArgumentNamesExtractor
 {
-    public static String[] getArgumentNames(Method method) throws Exception
+    public static String[] getArgumentNames(Method method)throws Exception
     {
         Class<?> declaringClass = method.getDeclaringClass();
         ClassLoader classLoader = declaringClass.getClassLoader();
@@ -19,38 +19,47 @@ public class ArgumentNamesExtractor
         InputStream classBytecode = classLoader.getResourceAsStream(className + ".class");
 
         // Vérification que le bytecode est trouvé
-        if (classBytecode == null) {
+        if (classBytecode == null)
+        {
             throw new IOException("Bytecode not found for class: " + declaringClass.getName());
         }
 
-        ClassReader classReader = new ClassReader(classBytecode);
-
-        final String[] argumentNames = new String[method.getParameterCount()];
-        classReader.accept(new ClassVisitor(Opcodes.ASM7)
+        try
         {
-            @Override
-            public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions)
-            {
-//                if (name.equals(method.getName()) && descriptor.equals(getMethodDescriptor(method)))
-                if (name.equals(method.getName()))
-                {
-                    return new MethodVisitor(Opcodes.ASM7)
-                    {
-                        @Override
-                        public void visitLocalVariable(String name, String descriptor, String signature, org.objectweb.asm.Label start, org.objectweb.asm.Label end, int index)
-                        {
-                            if (!name.equals("this") && !name.equals("i"))
-                            {
-                                argumentNames[index - 1] = name;
-                            }
-                        }
-                    };
-                }
-                return super.visitMethod(access, name, descriptor, signature, exceptions);
-            }
-        }, 0);
 
-        return argumentNames;
+            ClassReader classReader = new ClassReader(classBytecode);
+
+            final String[] argumentNames = new String[method.getParameterCount()];
+            classReader.accept(new ClassVisitor(Opcodes.ASM7)
+            {
+                @Override
+                public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+//                if (name.equals(method.getName()) && descriptor.equals(getMethodDescriptor(method)))
+                    if (name.equals(method.getName()) && descriptor.equals(getMethodDescriptor(method)))
+                    {
+                        return new MethodVisitor(Opcodes.ASM7)
+                        {
+                            @Override
+                            public void visitLocalVariable(String name, String descriptor, String signature, org.objectweb.asm.Label start, org.objectweb.asm.Label end, int index)
+                            {
+//                                System.out.println(method.getName() + "-----" +name);
+                                if (!name.equals("this") && !name.equals("i"))
+                                {
+                                    argumentNames[index - 1] = name;
+                                }
+                            }
+                        };
+                    }
+                    return super.visitMethod(access, name, descriptor, signature, exceptions);
+                }
+            }, 0);
+
+            return argumentNames;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.getMessage());
+        }
     }
 
     private static String getMethodDescriptor(Method method)

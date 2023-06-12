@@ -98,7 +98,9 @@ public class Init {
             {
                 Url annotation = method.getAnnotation(Url.class);
                 String url = annotation.class_method();
-                Mapping mapping = new Mapping(loadedClass.getName(), method.getName());
+                String authentification = Authentification.GetAuthentification(method);
+
+                Mapping mapping = new Mapping(loadedClass.getName(), method.getName(), authentification);
                 mappingUrls.put(url,mapping);
             }
         }

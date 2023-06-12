@@ -1,14 +1,32 @@
-package models;
+package models.interne;
 
+import annotation_J.Scope;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
-import java.util.Date;
+import helpers_J.GlobalServlet;
 
-public class Person {
+import javax.servlet.ServletContext;
+import java.util.Date;
+import java.util.HashMap;
+
+@Scope(SingleTon = false)
+public class Person
+{
     String nom;
     Date dateNaissance;
     String email;
-    String adresse;
+    Float adresse;
+    int count = 0;
+
+    public Person()
+    {
+
+    }
+
+    public Person(String nom)
+    {
+        this.nom = nom;
+    }
 
     public String getNom() {
         return nom;
@@ -34,32 +52,63 @@ public class Person {
         this.email = email;
     }
 
-    public String getAdresse() {
+    public Float getAdresse() {
         return adresse;
     }
 
-    public void setAdresse(String adresse) {
+    public void setAdresse(Float adresse) {
         this.adresse = adresse;
     }
 
-    public Person(String nom) {
-        this.nom = nom;
-    }
-    
-    public Person() {
-    }
-    
-    
-    @Url(class_method = "Person-manger")
-    public void manger(){}
-
-    @Url(class_method = "Person-OK")
-    public void OK(){}
-    
     @Url(class_method = "Person-save")
-    public void save(double classNumber, Date dateNaissance){
-        System.out.println("Class number : "+classNumber+"\nDate sending :"+dateNaissance);
-        System.out.println("Nom :" + this.nom +"\nDate de naissance :"+ this.dateNaissance +"\n"+
+    public void save(Integer your_class_number, Date dateNaissance){
+        System.out.println("Class number : "+your_class_number+"\nDate sending :"+dateNaissance);
+        System.out.println("Nom :" + this.nom +"\nDate de naissance : "+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
+    }
+    @Url(class_method = "Person-tableau")
+    public void tableau(java.sql.Date[] nom, String null_able)
+    {
+        for (int i = 0 ;  i < nom.length ; i++)
+        {
+            System.out.println("Nom " + i + " : " + nom[i]);
+        }
+        System.out.println("null_able : " + null_able);
+    }
+
+    @Url(class_method = "Person-count")
+    public void count()
+    {
+        this.count += 1;
+        System.out.println(this.count + "------------------- Normale counter -----------------");
+    }
+    
+
+    @Url(class_method = "Person-admin")
+    public void admin()
+    {
+    }
+
+    @Url(class_method = "Person-log")
+    public ModelView log(String name)
+    {
+        ModelView mv = new ModelView();
+
+        if(name.compareTo("Logan") == 0)
+        {
+            ServletContext servletContext = GlobalServlet.getServletContext();
+            @SuppressWarnings("unchecked")
+            HashMap<String, Object> session = (HashMap<String, Object>) servletContext.getAttribute("authentification");
+            session.put("authentification", "admin");
+
+            String[] personne = new String[]{name, "Logan"};
+            
+            mv.additem("Personne", personne); // Data
+            mv.setView("accueil.jsp"); // Page
+            return mv;
+        }
+
+        mv.setView("index.jsp");
+        return mv;
     }
 }

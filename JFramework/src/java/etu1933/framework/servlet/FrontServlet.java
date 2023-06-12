@@ -1,22 +1,23 @@
 package etu1933.framework.servlet;
 
 import etu1933.framework.Mapping;
-import etu1933.framework.Singleton;
 import etu1933.framework.file.FileUpload;
 import etu1933.framework.view.ModelView;
-import helpers_J.Formulaire;
+import helpers_J.Authentification;
+import helpers_J.MethodLoader;
 import helpers_J.Init;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +34,38 @@ public class FrontServlet extends HttpServlet
 {
     HashMap<String,Mapping> MappingUrls;
     HashMap<String,Object> Singletons;
+    HashMap<String,String> InitParam;
+    HashMap<String,String> Auth_Session;
+    HashMap<String,Object> Sessions;
     ArrayList<FileUpload> fileUploads;
 
-    public Mapping getMapping(HttpServletRequest request)
+    public  HashMap<String,Object> getSessions()
+    {
+        return this.Sessions;
+    }
+    private void CheckAuthentification(Mapping mapping)throws Exception
+    {
+        if(mapping == null)return;
+//        String isConnected = getServletContext().getInitParameter("isConnected");
+//        String status = Auth_Session.get(isConnected);
+//        if(status == null)
+//        {
+//            throw new Exception("Your are not connected !");
+//        }
+
+        String require_auth = mapping.getAuthentification();
+
+        if(require_auth == null || require_auth.compareTo("") == 0)return;
+
+        String user_auth = Auth_Session.get("auth_session");
+
+        if(require_auth.compareTo(user_auth) == 0)
+        {
+            throw new Exception("Authentification error");
+        }
+    }
+
+    private Mapping getMapping(HttpServletRequest request) throws Exception
     {
         try
         {
@@ -52,89 +82,112 @@ public class FrontServlet extends HttpServlet
         }
         catch(Exception e)
         {
-            return null;
+            throw new Exception(e.getMessage());
         }
     }
-
-    public ModelView getModelView(Mapping mapping) throws IllegalArgumentException
+    public boolean TryModelView(Mapping mapping,HttpServletRequest request, HttpServletResponse response)throws Exception
     {
         try
         {
-            Class<?> classe = Class.forName(mapping.getClassName());
-            Object instance = Singleton.getOrInitSingleton(Singletons,  classe.getName());
-            if(instance == null)instance = classe.getDeclaredConstructor().newInstance();
+            ModelView modelview = MethodLoader.load_function(mapping, this.Singletons,request, response);
 
-            Method methode = classe.getMethod(mapping.getMethod());
-            ModelView modelview  = (ModelView)(methode.invoke(instance));
-            return modelview;
-        }
-        catch(Exception ex)
-        {
-            return null;
-        }
-    }
-
-    public boolean testModelView(Mapping mapping,HttpServletRequest request, HttpServletResponse response){
-        try
-        {
-            ModelView modelview = this.getModelView(mapping);// trouver le lien mapping
             if(modelview == null)return false;
+
             modelview.sendData(request, response);// Envoie du data
             String page = modelview.getView();
             RequestDispatcher dispatcher = request.getRequestDispatcher(page);
             dispatcher.include(request, response);
+
             return true;
         }
         catch(Exception ex)
         {
-            return false;
+            throw new Exception(ex.getMessage());
         }
     }
-
-    public boolean testFonction(Mapping mapping,HttpServletRequest request, HttpServletResponse response)
+    private void MyDispatcher(Mapping mapping, HttpServletRequest request, HttpServletResponse response)throws Exception
     {
+        if(mapping == null)
+        {
+            String controller = null;
+            try
+            {
+                String servlet_path = request.getServletPath();
+                String[] elements = servlet_path.split("/"); // Ca debute avec 1
+                controller = elements[1];
+                RequestDispatcher dsp = request.getRequestDispatcher(controller);
+                dsp.forward(request, response);
+            }
+            catch(Exception e)
+            {
+                throw new Exception(controller);
+            }
+        }
+    }
+    private void UseDefaultController(HttpServletRequest request, HttpServletResponse response)throws Exception
+    {
+        String DefaultController = InitParam.get("default_controller");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(DefaultController);
         try
         {
-            return Formulaire.formulaire_object(mapping, this.Singletons,request, response);
+            dispatcher.include(request, response);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            ex.printStackTrace();
-            return false;
+            throw new Exception(ex.getMessage());
         }
     }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws IOException, ClassNotFoundException {
         try
         {
             FileUpload.AddFileUpload(this.fileUploads, request, response);
+
             Mapping mapping = this.getMapping(request);
-            if(!this.testFonction(mapping, request, response))
+
+            MyDispatcher(mapping, request, response);
+
+            CheckAuthentification(mapping);
+
+            if(!TryModelView(mapping, request, response))
             {
-                if(!this.testModelView(mapping, request, response))
-                {
-                    this.error(request,response);
-                }
+                UseDefaultController(request, response);
             }
         }
         catch(Exception ex)
         {
             ex.printStackTrace();
-            this.error(request,response);
+            this.error(ex, request,response);
         }
+    }
+    private void setInitParam()
+    {
+        if(InitParam == null)InitParam = new HashMap<>();
+        InitParam.put("package_name",  getServletConfig().getInitParameter("package_name"));
+        InitParam.put("auth_session",  getServletConfig().getInitParameter("auth_session"));
+        InitParam.put("isConnected",  getServletConfig().getInitParameter("isConnected"));
+        InitParam.put("default_controller",  getServletConfig().getInitParameter("default_controller"));
     }
 
     @Override
-    public void init() throws ServletException
-    {
+    public void init() throws ServletException {
         super.init();
         String path = getServletContext().getRealPath("/WEB-INF/classes");
-        String package_name = getServletConfig().getInitParameter("package_name");
+        this.setInitParam();
+        String package_name = InitParam.get("package_name");
+        String auth_session = InitParam.get("auth_session");
+        String isConnected = InitParam.get("isConnected");
+        ServletContext servletContext = getServletContext();
         try
         {
             this.MappingUrls = new HashMap<>();
             this.Singletons = new HashMap<>();
+            this.Auth_Session = new HashMap<>();
+            this.Sessions = new HashMap<>();
+
             Init.setUrl_and_Singleton(this.MappingUrls,this.Singletons,null, package_name, path);
+            Authentification.InitSession_and_authentification(this.Auth_Session, isConnected, auth_session);
+            servletContext.setAttribute(auth_session, this.Auth_Session);
+            servletContext.setAttribute("session", this.Sessions);
         }
         catch (ClassNotFoundException ex)
         {
@@ -171,7 +224,7 @@ public class FrontServlet extends HttpServlet
         }
     }
 
-    public void error(HttpServletRequest request, HttpServletResponse response) throws IOException
+    public void error(Exception ex, HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
@@ -182,6 +235,7 @@ public class FrontServlet extends HttpServlet
             out.println("<title>Servlet FrontServlet</title>");
             out.println("</head>");
             out.println("<body>");
+            out.println("<h1> Error : " + ex.getMessage() + "</h1>");
             out.println("<p><u>Request URI:</u></p>");
             out.println("<h3>" + request.getRequestURI()+ "</h3>");
             out.println("<p><u>Method:</u></p>");

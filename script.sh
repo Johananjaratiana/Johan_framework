@@ -26,16 +26,21 @@ cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/asm-9.2.jar "$lib_pat
 # Compiler les fichiers .java vers la "classes_path"   /  *: specifie tout les .jar present et /: tout les .classe deja compile
 javac 						-d "$classes_path" "$java_path/annotation_J/Url.java"			-Xlint -Xdiags:verbose
 javac 						-d "$classes_path" "$java_path/annotation_J/Scope.java"			-Xlint -Xdiags:verbose
+javac 						-d "$classes_path" "$java_path/annotation_J/Auth.java"			-Xlint -Xdiags:verbose
 javac 						-d "$classes_path" "$java_path/etu1933/framework/Singleton.java"		-Xlint -Xdiags:verbose
 javac 						-d "$classes_path" "$java_path/etu1933/framework/Mapping.java"		-Xlint -Xdiags:verbose
 javac -cp ".:${lib_path}*" 			-d "$classes_path" "$java_path/etu1933/framework/view/ModelView.java"	-Xlint -Xdiags:verbose
 javac -cp ".:${lib_path}*"			-d "$classes_path" "$java_path/helpers_J/ArgumentNamesExtractor.java"	-Xlint -Xdiags:verbose
+javac -cp ".:${lib_path}*"			-d "$classes_path" "$java_path/helpers_J/GlobalServlet.java"	-Xlint -Xdiags:verbose
 javac -cp ".:${lib_path}*"			-d "$classes_path" "$java_path/etu1933/framework/file/FileUpload.java"	-Xlint -Xdiags:verbose
+javac -cp ".:${classes_path}" 			-d "$classes_path" "$java_path/helpers_J/Authentification.java"			-Xlint -Xdiags:verbose
 javac -cp ".:${classes_path}" 			-d "$classes_path" "$java_path/helpers_J/Init.java"			-Xlint -Xdiags:verbose
 
 javac -cp ".:${lib_path}*"			-d "$classes_path" "$java_path/helpers_J/MyCast.java"			-Xlint -Xdiags:verbose
-javac -cp ".:${lib_path}*:${classes_path}" 	-d "$classes_path" "$java_path/helpers_J/Formulaire.java"		-Xlint -Xdiags:verbose
+javac -cp ".:${lib_path}*:${classes_path}" 	-d "$classes_path" "$java_path/helpers_J/MethodLoader.java"		-Xlint -Xdiags:verbose
 javac -cp ".:${lib_path}*:${classes_path}" 	-d "$classes_path" "$java_path/etu1933/framework/servlet/FrontServlet.java"	-Xlint:-serial	-Xlint 
+javac -cp ".:${lib_path}*:${classes_path}" 	-d "$classes_path" "$java_path/etu1933/framework/servlet/MyServletContextListener.java"	-Xlint:-serial	-Xlint 
+
 
 
 # --------------------------- MIS EN .JAR DES CLASSES ---------------------------------
@@ -60,12 +65,12 @@ java_path="/home/johan/Documents/Programmation/Naina/Framework/Temporaire/java"
 mkdir "$classes_path"
 
 # Compiler les fichiers .java vers la "classes_path"   /  *: specifie tout les .jar present et /: tout les .classe deja compile
-find "$java_path" -name "*.java" -print0 | xargs -0 javac -cp ".:${lib_path}*" -d "$classes_path" -Xlint:-serial -Xlint -Xdiags:verbose
+find "$java_path" -name "*.java" -print0 | xargs -0 javac -parameters -cp ".:${lib_path}*" -d "$classes_path" -Xlint:-serial -Xlint -Xdiags:verbose
 # -------------------------------------------------- COMPILATION DU PROJET TEMPORAIRE -----------------------------------
 
 
 # --------------------------- MISE EN .WAR ---------------------------
- Chemin de sortie pour le fichier WAR
+# Chemin de sortie pour le fichier WAR
 WAR_OUTPUT_PATH="JTeste.war"
 # Exporter le projet en tant que WAR
 jar cvf "$WAR_OUTPUT_PATH" -C "$PROJECT_PATH" .

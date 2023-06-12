@@ -1,5 +1,6 @@
 package etu1933.framework.servlet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,24 +8,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
-public class StaticContentServlet extends HttpServlet {
+public class StaticContentServlet extends HttpServlet
+{
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String requestedFile = request.getRequestURI().substring(request.getContextPath().length());
-
-        // Chemin physique vers le dossier contenant les fichiers CSS
-        String basePath = "/home/johan/Documents/Programmation/Naina/Framework/JFramework/web/assets/css/";
-
-        Path file = Paths.get(basePath, requestedFile);
-        if (Files.exists(file)) {
-            // Définir le type de contenu pour la réponse
-            response.setContentType("text/css");
-            // Lire le contenu du fichier et l'écrire dans la réponse
-            Files.copy(file, response.getOutputStream());
-        } else {
-            // Fichier introuvable, renvoyer une réponse 404
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        // Obtenez l'objet ServletContext
+        ServletContext servletContext = getServletContext();
+        // Obtenez l'attribut "session" de l'objet ServletContext
+        @SuppressWarnings("unchecked")
+        HashMap<String, Object> session = (HashMap<String, Object>) servletContext.getAttribute("authentification");
+        System.out.println(session);
     }
 }

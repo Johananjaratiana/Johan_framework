@@ -1,8 +1,10 @@
 package etu1933.framework;
 
-public class Mapping {
+public class Mapping
+{
     String className;
     String method;
+    String authentification;
 
     public String getClassName() {
         return className;
@@ -20,9 +22,15 @@ public class Mapping {
         this.method = method;
     }
 
-    public Mapping(String className, String method) {
+    public String getAuthentification() {return authentification;}
+
+    public void setAuthentification(String authentification) {this.authentification = authentification;}
+
+    public Mapping(String className, String method, String authentification)
+    {
         this.setClassName(className);
         this.setMethod(method);
+        this.setAuthentification(authentification);
     }
     
     

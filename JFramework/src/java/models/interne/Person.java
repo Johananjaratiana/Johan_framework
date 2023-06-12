@@ -3,7 +3,11 @@ package models.interne;
 import annotation_J.Scope;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
+import helpers_J.GlobalServlet;
+
+import javax.servlet.ServletContext;
 import java.util.Date;
+import java.util.HashMap;
 
 @Scope(SingleTon = false)
 public class Person
@@ -51,7 +55,7 @@ public class Person
     {
         ModelView mv = new ModelView();
         String[] personne = new String[]{"Johan", "Logan"};
-        
+
         mv.additem("Personne", personne); // Data
         mv.setView("page1.jsp"); // Page
         return mv;
@@ -77,6 +81,28 @@ public class Person
     {
         this.count += 1;
         System.out.println(this.count + "------------------- Normale counter -----------------");
+    }
+
+    @Url(class_method = "Login-log")
+    public ModelView log(String name)
+    {
+        ModelView mv = new ModelView();
+
+        if(name.compareTo("Johan") == 0)
+        {
+            ServletContext servletContext = GlobalServlet.getServletContext();
+            @SuppressWarnings("unchecked")
+            HashMap<String, Object> session = (HashMap<String, Object>) servletContext.getAttribute("authentification");
+            session.put("authentification", "admin");
+
+            String[] personne = new String[]{"Johan", "Logan"};
+
+            mv.additem("Personne", personne);
+            mv.setView("page1.jsp");
+            return mv;
+        }
+        mv.setView("index.jsp");
+        return mv;
     }
     
 }

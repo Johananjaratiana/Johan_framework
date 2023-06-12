@@ -2,7 +2,7 @@ package models.interne;
 
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
-import models.Person;
+import models.interne.Person;
 
 public class MyModel 
 {
