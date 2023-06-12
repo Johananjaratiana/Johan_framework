@@ -9,14 +9,20 @@
     <head>
         <title>Affichage du tableau d'attributs</title>
         <link rel="stylesheet" type="text/css" href="/assets/css/index.css">
+<%--        <link rel="stylesheet" type="text/css" href="<%= request.getServletContext().getRealPath("/assets/css/index.css")%>">--%>
     </head>
     <body>
-<%--        <div class="test_css">TEST____CSS</div>--%>
+        <div class="test_css">TEST____CSS</div>
         <h1>Envoie de donnes a patir d` une controllers :</h1>
         <ul>
-            <% for (int i = 0; i < liste.length ; i++) { %>
-                <li><%= liste[i] %></li> <!-- Affichage de chaque élément du tableau -->
-            <% } %>
+            <% if(liste != null)
+            {
+                for (int i = 0; i < liste.length ; i++)
+                { %>
+            <li><%= liste[i] %></li> <!-- Affichage de chaque élément du tableau -->
+            <%
+                }
+            } %>
         </ul>
 
         <h1>Envoie de donnes a patir d` une formulaire :</h1>

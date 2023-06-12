@@ -15,51 +15,72 @@ public class MyCast
 {
     public static void verified_casting_and_set(Class<?> classe, String paramName, Object instance, String value)throws Exception
     {
-        Class<?> attr_class = hasField(classe, paramName);
-        if(attr_class == null)return;
+        try
+        {
+            Class<?> attr_class = hasField(classe, paramName);
+            if (attr_class == null) return;
 
-        if(isSimpleAttribute(attr_class) == false)
-        {
-            Object targetObject = attr_class.getDeclaredConstructor().newInstance();
-            BeanUtils.populate(targetObject, Collections.singletonMap(paramName, value));
-            BeanUtils.setProperty(instance, paramName, targetObject);
+            if (isSimpleAttribute(attr_class) == false)
+            {
+                Object targetObject = attr_class.getDeclaredConstructor().newInstance();
+                BeanUtils.populate(targetObject, Collections.singletonMap(paramName, value));
+                BeanUtils.setProperty(instance, paramName, targetObject);
+            }
+            else
+            {
+                BeanUtils.setProperty(instance, paramName, value);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            BeanUtils.setProperty(instance, paramName, value);
+            throw new Exception(ex.getMessage());
         }
     }
-    static <T> T MyCasting(Class<T> targetType, String value) throws Exception
+    public static <T> T MyCasting(Class<T> targetType, String value) throws Exception
     {
-        Class<?> casting_type_object = getClassType(targetType);
-        if(casting_type_object == String.class)
+        try
         {
-            return targetType.cast(value);
+            Class<?> casting_type_object = getClassType(targetType);
+            if (casting_type_object == String.class)
+            {
+                return targetType.cast(value);
+            }
+            else if (isSimpleAttribute(casting_type_object) == true)
+            {
+                Method valueOfMethod = casting_type_object.getMethod("valueOf", String.class);
+                return targetType.cast(valueOfMethod.invoke(null, value));
+            }
+            else
+            {
+                return targetType.cast(parseDate(targetType, value, "yyyy-MM-dd"));
+            }
         }
-        else if (isSimpleAttribute(casting_type_object) == true)
+        catch (Exception ex)
         {
-            Method valueOfMethod = casting_type_object.getMethod("valueOf", String.class);
-            return targetType.cast(valueOfMethod.invoke(null, value));
-        }
-        else
-        {
-            return targetType.cast(parseDate(targetType, value, "yyyy-MM-dd"));
+            throw new Exception(ex.getMessage());
         }
     }
     private  static <T> T parseDate(Class<T> targetType, String dateString, String format) throws Exception
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-        if(targetType.equals(LocalDate.class))return targetType.cast(LocalDate.parse(dateString, formatter));
-        else if(targetType.equals(LocalTime.class))return targetType.cast(LocalTime.parse(dateString, formatter));
-        else if(targetType.equals(LocalDateTime.class))return targetType.cast(LocalDateTime.parse(dateString, formatter));
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            if (targetType.equals(LocalDate.class)) return targetType.cast(LocalDate.parse(dateString, formatter));
+            else if (targetType.equals(LocalTime.class)) return targetType.cast(LocalTime.parse(dateString, formatter));
+            else if (targetType.equals(LocalDateTime.class))
+                return targetType.cast(LocalDateTime.parse(dateString, formatter));
 
-        SimpleDateFormat formatter2 = new SimpleDateFormat(format);
-        java.util.Date utilDate = formatter2.parse(dateString);
+            SimpleDateFormat formatter2 = new SimpleDateFormat(format);
+            java.util.Date utilDate = formatter2.parse(dateString);
 
-        if(targetType.equals(java.sql.Date.class))return targetType.cast(new java.sql.Date(utilDate.getTime()));
-        else if (targetType.equals(java.util.Date.class))return targetType.cast(utilDate);
+            if (targetType.equals(java.sql.Date.class)) return targetType.cast(new java.sql.Date(utilDate.getTime()));
+            else if (targetType.equals(java.util.Date.class)) return targetType.cast(utilDate);
 
-        throw new IllegalArgumentException("UNsupported target type : " + targetType);
+            else throw new Exception("Unsupported type of date : " + targetType);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.getMessage());
+        }
     }
     private static Class<?> getClassType(Class<?> targetType)
     {

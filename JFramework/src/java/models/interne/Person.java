@@ -1,16 +1,22 @@
 package models.interne;
 
-import annotation_J.ParameterName;
+import annotation_J.Scope;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
-import java.time.LocalDate;
-import java.util.Date;
+import helpers_J.GlobalServlet;
 
-public class Person {
+import javax.servlet.ServletContext;
+import java.util.Date;
+import java.util.HashMap;
+
+@Scope(SingleTon = false)
+public class Person
+{
     String nom;
     Date dateNaissance;
     String email;
     Float adresse;
+    int count = 0;
 
     public String getNom() {
         return nom;
@@ -49,21 +55,14 @@ public class Person {
     {
         ModelView mv = new ModelView();
         String[] personne = new String[]{"Johan", "Logan"};
-        
+
         mv.additem("Personne", personne); // Data
         mv.setView("page1.jsp"); // Page
         return mv;
     }
     @Url(class_method = "Person-save")
-<<<<<<< Updated upstream
-    @ParameterName(paramsName = "classNumber-dateNaissance")
     public void save(Integer your_class_number, Date dateNaissance){
         System.out.println("Class number : "+your_class_number+"\nDate sending :"+dateNaissance);
-=======
-    public void save(Integer classNumber, Date dateNaissance)
-    {
-        System.out.println("Class number : "+classNumber+"\nDate sending :"+dateNaissance);
->>>>>>> Stashed changes
         System.out.println("Nom :" + this.nom +"\nDate de naissance : "+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
     }
@@ -75,6 +74,35 @@ public class Person {
             System.out.println("Nom " + i + " : " + nom[i]);
         }
         System.out.println("null_able : " + null_able);
+    }
+
+    @Url(class_method = "Person-count")
+    public void count()
+    {
+        this.count += 1;
+        System.out.println(this.count + "------------------- Normale counter -----------------");
+    }
+
+    @Url(class_method = "Login-log")
+    public ModelView log(String name)
+    {
+        ModelView mv = new ModelView();
+
+        if(name.compareTo("Johan") == 0)
+        {
+            ServletContext servletContext = GlobalServlet.getServletContext();
+            @SuppressWarnings("unchecked")
+            HashMap<String, Object> session = (HashMap<String, Object>) servletContext.getAttribute("authentification");
+            session.put("authentification", "admin");
+
+            String[] personne = new String[]{"Johan", "Logan"};
+
+            mv.additem("Personne", personne);
+            mv.setView("page1.jsp");
+            return mv;
+        }
+        mv.setView("index.jsp");
+        return mv;
     }
     
 }

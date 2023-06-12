@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <servlet>
+        <servlet-name>FrontServlet</servlet-name>
+        <servlet-class>etu1933.framework.servlet.FrontServlet</servlet-class>
+        <init-param>
+            <param-name>package_name</param-name>
+            <param-value>models</param-value>
+        </init-param>
+        <init-param>
+            <param-name>isConnected</param-name>
+            <param-value></param-value>
+        </init-param>
+        <init-param>
+            <param-name>auth_session</param-name>
+            <param-value>authentification</param-value>
+        </init-param>
+        <init-param>
+            <param-name>default_controller</param-name>
+            <param-value></param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FrontServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StaticContentServlet</servlet-name>
+        <servlet-class>etu1933.framework.servlet.StaticContentServlet</servlet-class>
+        <init-param>
+            <param-name>static_folder</param-name>
+            <param-value>/home/johan/Documents/Programmation/Naina/Framework/JFramework/web/assets/*</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaticContentServlet</servlet-name>
+        <url-pattern>/StaticContentServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
