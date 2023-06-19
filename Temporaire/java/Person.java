@@ -1,114 +1,55 @@
 package models.interne;
 
+import annotation_J.Auth;
 import annotation_J.Scope;
+import annotation_J.Session;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
-import helpers_J.GlobalServlet;
 
-import javax.servlet.ServletContext;
 import java.util.Date;
 import java.util.HashMap;
 
 @Scope(SingleTon = false)
 public class Person
 {
+    HashMap<String, Object> sessions;
+
     String nom;
-    Date dateNaissance;
-    String email;
-    Float adresse;
-    int count = 0;
 
-    public Person()
-    {
+    public Person(){}
 
-    }
-
-    public Person(String nom)
-    {
-        this.nom = nom;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public Date getDateNaissance() {
-        return dateNaissance;
-    }
-
-    public void setDateNaissance(Date dateNaissance) {
-        this.dateNaissance = dateNaissance;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Float getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(Float adresse) {
-        this.adresse = adresse;
-    }
-
-    @Url(class_method = "Person-save")
-    public void save(Integer your_class_number, Date dateNaissance){
-        System.out.println("Class number : "+your_class_number+"\nDate sending :"+dateNaissance);
-        System.out.println("Nom :" + this.nom +"\nDate de naissance : "+ this.dateNaissance +"\n"+
-                "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
-    }
-    @Url(class_method = "Person-tableau")
-    public void tableau(java.sql.Date[] nom, String null_able)
-    {
-        for (int i = 0 ;  i < nom.length ; i++)
-        {
-            System.out.println("Nom " + i + " : " + nom[i]);
-        }
-        System.out.println("null_able : " + null_able);
-    }
-
-    @Url(class_method = "Person-count")
-    public void count()
-    {
-        this.count += 1;
-        System.out.println(this.count + "------------------- Normale counter -----------------");
-    }
+    public Person(String nom){this.nom = nom;}
     
-
-    @Url(class_method = "Person-admin")
-    public void admin()
+    @Url(class_method = "Person-ReceiveData")
+    @Auth(name = {"admin"})
+    public ModelView ReceiveData(java.sql.Date[] dates, String null_able)
     {
+        ModelView modelView = new ModelView();
+
+        modelView.additem("SendData", dates);
+        modelView.setView("admin.jsp");
+        return modelView;
     }
 
-    @Url(class_method = "Person-log")
-    public ModelView log(String name)
+    @Url(class_method = "Person-Client")
+    @Auth(name = {"client"})
+    @Session(sessionNames = {"authentification"})
+    public ModelView Client()
     {
-        ModelView mv = new ModelView();
+        ModelView modelView = new ModelView();
 
-        if(name.compareTo("Logan") == 0)
-        {
-            ServletContext servletContext = GlobalServlet.getServletContext();
-            @SuppressWarnings("unchecked")
-            HashMap<String, Object> session = (HashMap<String, Object>) servletContext.getAttribute("authentification");
-            session.put("authentification", "admin");
+        modelView.addSession("createdSession", this.sessions.get("authentification"));
+        modelView.setView("client.jsp");
+        return modelView;
+    }
 
-            String[] personne = new String[]{name, "Logan"};
-            
-            mv.additem("Personne", personne); // Data
-            mv.setView("accueil.jsp"); // Page
-            return mv;
-        }
+    @Url(class_method = "Person-Both")
+    @Auth(name = {"client", "admin"})
+    public ModelView Both()
+    {
+        ModelView modelView = new ModelView();
 
-        mv.setView("index.jsp");
-        return mv;
+        modelView.setView("both.jsp");
+        return modelView;
     }
 }

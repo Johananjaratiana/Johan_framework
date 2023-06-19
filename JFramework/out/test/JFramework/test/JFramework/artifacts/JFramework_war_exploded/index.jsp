@@ -9,7 +9,7 @@
 
 <h1>Login</h1>
 
-<form method='post' action='Login-log'>
+<form method='post' action='Person-log'>
     <input type='text' name='name'>
     <input type='submit' value='OK'>
 </form>

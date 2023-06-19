@@ -3,9 +3,11 @@ package etu1933.framework.view;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-public class ModelView {
+public class ModelView
+{
     String view;
     HashMap<String, Object> data;
+    HashMap<String, Object> session;
 
     public HashMap<String, Object> getData() {
         return data;
@@ -19,12 +21,35 @@ public class ModelView {
         return view;
     }
 
-    public ModelView setView(String view) {
+    public ModelView setView(String view)
+    {
         this.view = view;
         return this;
     }
 
-    public ModelView() {
+    public HashMap<String, Object> getSession()
+    {
+        return session;
+    }
+
+    public Object getSession(String sessionName)
+    {
+        return this.getSession().get(sessionName);
+    }
+
+    public void setSession(HashMap<String, Object> session)
+    {
+        this.session = session;
+    }
+
+    public void addSession(String sessionName, Object object)
+    {
+        this.getSession().put(sessionName, object);
+    }
+
+    public ModelView()
+    {
+        this.setSession(new HashMap<>());
         this.setData(new HashMap<>());
     }
 
@@ -32,7 +57,8 @@ public class ModelView {
         this.getData().put(key,value);
     }
 
-    public void sendData(HttpServletRequest request, HttpServletResponse response){
+    public void sendData(HttpServletRequest request)
+    {
         this.getData().forEach((key, value) -> {
             request.setAttribute(key, value);
         });

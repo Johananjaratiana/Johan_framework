@@ -11,8 +11,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Enumeration;
 import java.util.HashMap;
-
-import static helpers_J.MyCast.MyCasting;
+import helpers_J.MyCast;
 
 /**
  *
@@ -20,15 +19,21 @@ import static helpers_J.MyCast.MyCasting;
  */
 public class MethodLoader
 {
-    public static ModelView load_function(Mapping mapping, HashMap<String,Object> Singletons, HttpServletRequest request, HttpServletResponse response)throws Exception
+    public static ModelView load_function(String user_session_name,Mapping mapping, HashMap<String,Object> Singletons, HttpServletRequest request, HttpServletResponse response)throws Exception
     {
         if(mapping == null)return null;
+
         try
         {
             Class<?> class_temp = Class.forName(mapping.getClassName());
             Method method = getMethod(class_temp, mapping.getMethod());
             Object instance = Singleton.getOrInitSingleton(Singletons, class_temp.getName());
+
+            // Chaque classe devrait avoir une constructeur vide
             if(instance == null)instance = class_temp.getDeclaredConstructor().newInstance();
+
+            // Les classes qui ont besion de session doivent creer une HashMap<String, Object> sessionname :
+            MySession.SetRequiredSession(user_session_name, instance, method,request);
 
             Object[] args = null;
             ModelView modelview = null;
@@ -57,11 +62,11 @@ public class MethodLoader
         catch (Exception ex)
         {
             ex.printStackTrace();
-            throw new Exception(ex.getCause());
+            throw new Exception(ex.getMessage());
         }
     }
     
-    private static Method getMethod(Class<?> cls, String methodName)
+    public static Method getMethod(Class<?> cls, String methodName)
     {
         for (Method m : cls.getDeclaredMethods())
         {
@@ -123,7 +128,7 @@ public class MethodLoader
                 {
                     try
                     {
-                        ans[i] = MyCasting(paramsTypes[i], value);
+                        ans[i] = MyCast.MyCasting(paramsTypes[i], value);
                     }
                     catch (Exception e)
                     {

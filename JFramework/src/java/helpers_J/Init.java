@@ -30,7 +30,7 @@ public class Init {
             else if (file.getName().endsWith(".class"))
             {
                 try {
-                    make_full(mappingUrls, singletons, file, package_anterieur, package_name);
+                    Init.make_full(mappingUrls, singletons, file, package_anterieur, package_name);
                 }catch (Exception ex){
                     throw new Exception(ex.getMessage());
                 }
@@ -98,7 +98,7 @@ public class Init {
             {
                 Url annotation = method.getAnnotation(Url.class);
                 String url = annotation.class_method();
-                String authentification = Authentification.GetAuthentification(method);
+                String[] authentification = Authentification.GetAuthentification(method);
 
                 Mapping mapping = new Mapping(loadedClass.getName(), method.getName(), authentification);
                 mappingUrls.put(url,mapping);

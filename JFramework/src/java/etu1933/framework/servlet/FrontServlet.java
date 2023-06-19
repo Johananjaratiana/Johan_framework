@@ -6,6 +6,7 @@ import etu1933.framework.view.ModelView;
 import helpers_J.Authentification;
 import helpers_J.MethodLoader;
 import helpers_J.Init;
+import helpers_J.MySession;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -35,33 +36,17 @@ public class FrontServlet extends HttpServlet
     HashMap<String,Mapping> MappingUrls;
     HashMap<String,Object> Singletons;
     HashMap<String,String> InitParam;
-    HashMap<String,String> Auth_Session;
-    HashMap<String,Object> Sessions;
     ArrayList<FileUpload> fileUploads;
 
-    public  HashMap<String,Object> getSessions()
-    {
-        return this.Sessions;
-    }
-    private void CheckAuthentification(Mapping mapping)throws Exception
+    private void CheckAuthentification(Mapping mapping, HttpServletRequest request)throws Exception
     {
         if(mapping == null)return;
-//        String isConnected = getServletContext().getInitParameter("isConnected");
-//        String status = Auth_Session.get(isConnected);
-//        if(status == null)
-//        {
-//            throw new Exception("Your are not connected !");
-//        }
 
-        String require_auth = mapping.getAuthentification();
+        String user_auth = (String) request.getSession().getAttribute(this.InitParam.get("auth_session"));
 
-        if(require_auth == null || require_auth.compareTo("") == 0)return;
-
-        String user_auth = Auth_Session.get("auth_session");
-
-        if(require_auth.compareTo(user_auth) == 0)
+        if(mapping.CanAccess(user_auth) == false)
         {
-            throw new Exception("Authentification error");
+            throw new Exception("Method`s authetification ! error !");
         }
     }
 
@@ -89,11 +74,13 @@ public class FrontServlet extends HttpServlet
     {
         try
         {
-            ModelView modelview = MethodLoader.load_function(mapping, this.Singletons,request, response);
+            String user_session_name = this.InitParam.get("session_name");
+            ModelView modelview = MethodLoader.load_function(user_session_name, mapping, this.Singletons,request, response);
 
             if(modelview == null)return false;
 
-            modelview.sendData(request, response);// Envoie du data
+            MySession.NewSession(modelview.getSession(), request);      // Ajout de session
+            modelview.sendData(request);                                // Envoie du data
             String page = modelview.getView();
             RequestDispatcher dispatcher = request.getRequestDispatcher(page);
             dispatcher.include(request, response);
@@ -137,6 +124,23 @@ public class FrontServlet extends HttpServlet
             throw new Exception(ex.getMessage());
         }
     }
+    private void CheckIsConnected(Mapping mapping, HttpServletRequest request)throws Exception
+    {
+        try
+        {
+            String[] require_authentification = Authentification.GetAuthentification(mapping);
+            if (require_authentification == null) return;
+            if(request.getSession().getAttribute(this.InitParam.get("isConnected")) == null)
+            {
+                throw new Exception("Your are not connected");
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            throw new Exception(ex.getMessage());
+        }
+    }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws IOException, ClassNotFoundException {
         try
         {
@@ -146,7 +150,9 @@ public class FrontServlet extends HttpServlet
 
             MyDispatcher(mapping, request, response);
 
-            CheckAuthentification(mapping);
+            CheckAuthentification(mapping, request);
+
+            CheckIsConnected(mapping, request);
 
             if(!TryModelView(mapping, request, response))
             {
@@ -159,13 +165,16 @@ public class FrontServlet extends HttpServlet
             this.error(ex, request,response);
         }
     }
+
     private void setInitParam()
     {
         if(InitParam == null)InitParam = new HashMap<>();
         InitParam.put("package_name",  getServletConfig().getInitParameter("package_name"));
         InitParam.put("auth_session",  getServletConfig().getInitParameter("auth_session"));
+        InitParam.put("session_name",  getServletConfig().getInitParameter("session_name"));
         InitParam.put("isConnected",  getServletConfig().getInitParameter("isConnected"));
         InitParam.put("default_controller",  getServletConfig().getInitParameter("default_controller"));
+
     }
 
     @Override
@@ -174,20 +183,12 @@ public class FrontServlet extends HttpServlet
         String path = getServletContext().getRealPath("/WEB-INF/classes");
         this.setInitParam();
         String package_name = InitParam.get("package_name");
-        String auth_session = InitParam.get("auth_session");
-        String isConnected = InitParam.get("isConnected");
-        ServletContext servletContext = getServletContext();
         try
         {
             this.MappingUrls = new HashMap<>();
             this.Singletons = new HashMap<>();
-            this.Auth_Session = new HashMap<>();
-            this.Sessions = new HashMap<>();
 
             Init.setUrl_and_Singleton(this.MappingUrls,this.Singletons,null, package_name, path);
-            Authentification.InitSession_and_authentification(this.Auth_Session, isConnected, auth_session);
-            servletContext.setAttribute(auth_session, this.Auth_Session);
-            servletContext.setAttribute("session", this.Sessions);
         }
         catch (ClassNotFoundException ex)
         {
