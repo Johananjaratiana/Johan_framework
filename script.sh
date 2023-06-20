@@ -80,6 +80,7 @@ WAR_OUTPUT_PATH="JTeste.war"
 jar cvf "$WAR_OUTPUT_PATH" -C "$PROJECT_PATH" .
 # Copie de fichier war vers tomcat9
 sudo mv "$WAR_OUTPUT_PATH" /var/lib/tomcat9/webapps/
+
 # --------------------------- MISE EN .WAR ---------------------------
 
 
