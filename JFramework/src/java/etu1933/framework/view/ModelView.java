@@ -8,6 +8,11 @@ public class ModelView
     String view;
     HashMap<String, Object> data;
     HashMap<String, Object> session;
+    boolean isJson = false;
+
+    public boolean isJson() {  return isJson;}
+
+    public void setJson(boolean json) {isJson = json;}
 
     public HashMap<String, Object> getData() {
         return data;

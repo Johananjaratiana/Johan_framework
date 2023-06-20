@@ -57,6 +57,7 @@ public class Person
         ModelView mv = new ModelView();
         String[] personne = new String[]{"Johan", "Logan"};
 
+        mv.setJson(true);
         mv.additem("Personne", personne); // Data
         mv.setView("page1.jsp"); // Page
         return mv;
