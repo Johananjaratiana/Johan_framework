@@ -9,7 +9,6 @@
     <head>
         <title>Affichage du tableau d'attributs</title>
         <link rel="stylesheet" type="text/css" href="/assets/css/index.css">
-<%--        <link rel="stylesheet" type="text/css" href="<%= request.getServletContext().getRealPath("/assets/css/index.css")%>">--%>
     </head>
     <body>
         <div class="test_css">TEST____CSS</div>

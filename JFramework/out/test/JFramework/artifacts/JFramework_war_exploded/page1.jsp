@@ -9,7 +9,6 @@
     <head>
         <title>Affichage du tableau d'attributs</title>
         <link rel="stylesheet" type="text/css" href="/assets/css/index.css">
-<%--        <link rel="stylesheet" type="text/css" href="<%= request.getServletContext().getRealPath("/assets/css/index.css")%>">--%>
     </head>
     <body>
         <div class="test_css">TEST____CSS</div>
@@ -48,13 +47,13 @@
         <form method="post" action="Person-tableau">
             <input type="hidden" value="Ca marche" name="null_able">
             <label for="input-name1">Nom 1:</label>
-            <input type="date" id="input-name1" name="nom[]" required>
+            <input type="date" id="input-name1" name="dates[]" required>
             <br>
             <label for="input-name2">Nom 2:</label>
-            <input type="date" id="input-name2" name="nom[]" required>
+            <input type="date" id="input-name2" name="dates[]" required>
             <br>
             <label for="input-name3">Nom 3:</label>
-            <input type="date" id="input-name3" name="nom[]" required>
+            <input type="date" id="input-name3" name="dates[]" required>
             <br>
             <input type="submit" value="Enregistrer">
         </form>
