@@ -1,5 +1,6 @@
 package etu1933.framework.servlet;
 
+import com.google.gson.Gson;
 import etu1933.framework.Mapping;
 import etu1933.framework.file.FileUpload;
 import etu1933.framework.view.ModelView;
@@ -33,6 +34,7 @@ import java.util.logging.Logger;
 )
 public class FrontServlet extends HttpServlet
 {
+    boolean isJson = false;
     HashMap<String,Mapping> MappingUrls;
     HashMap<String,Object> Singletons;
     HashMap<String,String> InitParam;
@@ -79,6 +81,13 @@ public class FrontServlet extends HttpServlet
 
             if(modelview == null)return false;
 
+            if(modelview.isJson() == true)
+            {
+                LoadJSON(modelview.getData(), response);
+                this.isJson = true;
+                return false;
+            }
+
             MySession.NewSession(modelview.getSession(), request);      // Ajout de session
             modelview.sendData(request);                                // Envoie du data
             String page = modelview.getView();
@@ -90,6 +99,24 @@ public class FrontServlet extends HttpServlet
         catch(Exception ex)
         {
             throw new Exception(ex.getMessage());
+        }
+    }
+
+    private void LoadJSON(Object dataObject, HttpServletResponse response)throws Exception
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(dataObject);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        try
+        {
+            response.getWriter().write(json);
+        }
+        catch (IOException e)
+        {
+            throw new Exception(e.getMessage() +" --- error on returning JSON Object");
         }
     }
     private void MyDispatcher(Mapping mapping, HttpServletRequest request, HttpServletResponse response)throws Exception
@@ -156,7 +183,10 @@ public class FrontServlet extends HttpServlet
 
             if(!TryModelView(mapping, request, response))
             {
-                UseDefaultController(request, response);
+                if (!this.isJson)
+                {
+                    UseDefaultController(request, response);
+                }
             }
         }
         catch(Exception ex)
