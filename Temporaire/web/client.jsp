@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-    String createdSession = request.getSession().getAttribute("createdSession");
+    String session = request.getSession().getAttribute("createdSession");
+    String attributs = request.getAttribute("requiredSession");
 %>
 <!DOCTYPE html>
 <html>

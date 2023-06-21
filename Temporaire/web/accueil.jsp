@@ -31,6 +31,12 @@
     </form>
 
     <h1>"Both" Link</h1>
-    <a href="Persion-Both">Teste both authentification</a>
+    <a href="Person-Both">Teste both authentification</a>
+
+    <h1>"Both" Session data</h1>
+    <a href="Person-BothSessionData">Teste both authentification</a>
+
+    <h1>"Both" Both Session ModelView Data</h1>
+    <a href="Person-BothSessionModelViewData">Teste both authentification</a>
 </body>
 </html>
