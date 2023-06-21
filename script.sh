@@ -26,12 +26,14 @@ cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/commons-beanutils-1.9
 cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/commons-beanutils-1.9.4/commons-logging-1.2.jar "$lib_path" 
 cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/servlet-api.jar "$lib_path"
 cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/asm-9.2.jar "$lib_path"
+cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/gson/gson-2.10.jar "$lib_path"
 
 # Compiler les fichiers .java vers la "classes_path"   /  *: specifie tout les .jar present et /: tout les .classe deja compile
 javac 						-d "${classes_path}" "${java_path}/annotation_J/Url.java"			                -Xlint -Xdiags:verbose
 javac 						-d "${classes_path}" "${java_path}/annotation_J/Scope.java"			                -Xlint -Xdiags:verbose
 javac 						-d "${classes_path}" "${java_path}/annotation_J/Auth.java"			                -Xlint -Xdiags:verbose
 javac 						-d "${classes_path}" "${java_path}/annotation_J/Session.java"		                -Xlint -Xdiags:verbose
+javac 						-d "${classes_path}" "${java_path}/annotation_J/restAPI.java"		                -Xlint -Xdiags:verbose
 javac 						-d "${classes_path}" "${java_path}/etu1933/framework/Singleton.java"	            -Xlint -Xdiags:verbose
 javac 						-d "${classes_path}" "${java_path}/etu1933/framework/Mapping.java"		            -Xlint -Xdiags:verbose
 javac -cp ".:${lib_path}*" 			-d "${classes_path}" "${java_path}/etu1933/framework/view/ModelView.java"	-Xlint -Xdiags:verbose

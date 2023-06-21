@@ -97,6 +97,13 @@ III- Etape 3:
         - Ensuite les sessions sont accessible via l` attribut """HashMap<String, Object> sessions"""
             creer dans la classe
 
-    7) Fonction Authentifier :
+    7) Fonction avec Authentification :
         - Annoter par exemple """@Auth(name = {"admin", "dg"})""" la fonction qui n` est pas accessible
             que par un utilisateur "admin" ou "dg"
+
+    8) Fonction qui retourne des JSON :
+        - Pour les fonction qui ne retournent pas des modelview :
+            Annoter par """@restAPI""" les fonction qui ne retourne pas des modelView
+        - Pour les fonction qui ne retournent pas des modelview :
+            Aplleller comme la suite la fonction de l` objet modelview : """modelView.setJson(true);"""
+
