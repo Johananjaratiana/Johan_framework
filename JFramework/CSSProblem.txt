@@ -1,1 +1,0 @@
-href='<%=request.getContextPath()%>/path_to_css_file/style.css'
