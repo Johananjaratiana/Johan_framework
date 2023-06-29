@@ -168,7 +168,10 @@ public class FrontServlet extends HttpServlet
             throw new Exception(ex.getMessage());
         }
     }
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws IOException, ClassNotFoundException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws IOException, ClassNotFoundException
+    {
+        if(!CanProcess(request))return;
+
         try
         {
             FileUpload.AddFileUpload(this.fileUploads, request, response);
@@ -204,7 +207,14 @@ public class FrontServlet extends HttpServlet
         InitParam.put("session_name",  getServletConfig().getInitParameter("session_name"));
         InitParam.put("isConnected",  getServletConfig().getInitParameter("isConnected"));
         InitParam.put("default_controller",  getServletConfig().getInitParameter("default_controller"));
-
+        InitParam.put("excludeFolders", getServletConfig().getInitParameter("excludeFolders"));
+    }
+    public boolean CanProcess(HttpServletRequest request)
+    {
+        String excludeFolders = this.InitParam.get("excludeFolders");
+        String requestPath = request.getRequestURI();
+        if (excludeFolders != null && requestPath.contains(excludeFolders))return false;
+        return true;
     }
 
     @Override
@@ -239,6 +249,7 @@ public class FrontServlet extends HttpServlet
         }
         catch (ClassNotFoundException ex)
         {
+            ex.printStackTrace();
             Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -251,6 +262,7 @@ public class FrontServlet extends HttpServlet
         }
         catch (ClassNotFoundException ex)
         {
+            ex.printStackTrace();
             Logger.getLogger(FrontServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

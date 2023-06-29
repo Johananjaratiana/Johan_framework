@@ -7,6 +7,7 @@ I- Etape 1:
 
     2) Ajoutez les bibliotheques suivants dans "WEB-INF/lib/" de votre projet:
     -------------------------------------------------------------------------
+        - gson-2.10.jar
         - asm-9.2.jar
         - commons-beanutils-1.9.4.jar
         - commons-collections-3.2.2.jar
@@ -23,6 +24,10 @@ II- Etape 2:
         <servlet>
             <servlet-name>FrontServlet</servlet-name>
             <servlet-class>etu1933.framework.servlet.FrontServlet</servlet-class>
+            <init-param>
+                <param-name>excludeFolders</param-name>
+                <param-value>static</param-value>
+            </init-param>
             <init-param>
                 <param-name>package_name</param-name>
                 <param-value>models</param-value>
@@ -41,21 +46,30 @@ II- Etape 2:
             </init-param>
             <init-param>
                 <param-name>default_controller</param-name>
-                <param-value>default_controller</param-value>
+                <param-value></param-value>
             </init-param>
         </servlet>
         <servlet-mapping>
             <servlet-name>FrontServlet</servlet-name>
             <url-pattern>/</url-pattern>
         </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>default</servlet-name>
+            <url-pattern>/static/*</url-pattern>
+        </servlet-mapping>
 
     2) Remplacer le param-value de:
     ------------------------------
+        - excludeFolders : static (un mot ou tout les "url" qui contient ce mot ne soit pas traiter par le servlet)
         - package_name : models (le nom du package qui contient les classes de vos models)
         - isConnected : isConnected (le nom de votre session pour verifier si l'utilisateur est connecter)
         - auth_session : authentification (le nom de votre session pour stocker la status de l'utilisateur)
         - session_name : sessions (le nom d` attribut """HashMap <String, Object>""" dans chaque classes qui ont besoin de session)
         - default_controller : default_controller (le nom de votre controller par defaut)
+
+    3) Concernant les styes commes css, js, image, ...:
+    --------------------------------------------------
+        - Remplacer l` url-pattern de la servlet-mapping de "default" par le nom de votre dossier qui contient tout ces éléments.
 
 
 III- Etape 3:
@@ -100,3 +114,7 @@ III- Etape 3:
     7) Fonction Authentifier :
         - Annoter par exemple """@Auth(name = {"admin", "dg"})""" la fonction qui n` est pas accessible
             que par un utilisateur "admin" ou "dg"
+
+    8) API-Rest : (JSON)
+        - Annoter par exemple """@Rest(class_method = "Person-find_all")""" la methode """find_all"""
+            dans la classe """Person"""

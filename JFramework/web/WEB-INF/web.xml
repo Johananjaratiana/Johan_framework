@@ -4,6 +4,10 @@
         <servlet-name>FrontServlet</servlet-name>
         <servlet-class>etu1933.framework.servlet.FrontServlet</servlet-class>
         <init-param>
+            <param-name>excludeFolders</param-name>
+            <param-value>static</param-value>
+        </init-param>
+        <init-param>
             <param-name>package_name</param-name>
             <param-value>models</param-value>
         </init-param>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>FrontServlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/*</url-pattern>
     </servlet-mapping>
 
     <session-config>
