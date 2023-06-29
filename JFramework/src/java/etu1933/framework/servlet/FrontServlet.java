@@ -72,7 +72,26 @@ public class FrontServlet extends HttpServlet
             throw new Exception(e.getMessage());
         }
     }
-    public boolean TryModelView(Mapping mapping,HttpServletRequest request, HttpServletResponse response)throws Exception
+    private boolean TryJson(Mapping mapping,HttpServletRequest request, HttpServletResponse response)throws Exception
+    {
+        try
+        {
+            String user_session_name = this.InitParam.get("session_name");
+            Object returning = MethodLoader.load_function_Json(user_session_name, mapping, this.Singletons,request, response);
+
+            if(returning == null)return false;
+
+            LoadJSON(returning, response);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            throw new Exception(ex.getMessage() + " Json trying is null");
+        }
+    }
+    private boolean TryModelView(Mapping mapping,HttpServletRequest request, HttpServletResponse response)throws Exception
     {
         try
         {
@@ -186,9 +205,12 @@ public class FrontServlet extends HttpServlet
 
             if(!TryModelView(mapping, request, response))
             {
-                if (!this.isJson)
+                if(!TryJson(mapping, request, response))
                 {
-                    UseDefaultController(request, response);
+                    if (!this.isJson)
+                    {
+                        UseDefaultController(request, response);
+                    }
                 }
             }
         }
@@ -196,6 +218,10 @@ public class FrontServlet extends HttpServlet
         {
             ex.printStackTrace();
             this.error(ex, request,response);
+        }
+        finally
+        {
+            this.isJson = false;
         }
     }
 

@@ -1,9 +1,6 @@
 package models.interne;
 
-import annotation_J.Auth;
-import annotation_J.Scope;
-import annotation_J.Session;
-import annotation_J.Url;
+import annotation_J.*;
 import etu1933.framework.view.ModelView;
 
 import java.util.Date;
@@ -68,17 +65,13 @@ public class Person
         System.out.println("Nom :" + this.nom +"\nDate de naissance : "+ this.dateNaissance +"\n"+
                 "E-mail :" +this.email+ "\nAdresse :" + this.adresse);
     }
+
+    @restAPI
     @Url(class_method = "Person-tableau")
     @Session(sessionNames = {"user_session"})
-    public void tableau(java.sql.Date[] dates, String null_able)
+    public java.sql.Date[] tableau(java.sql.Date[] dates, String null_able)
     {
-        System.out.println(this.sessions.get("user_session"));
-        System.out.println(dates);
-        for (int i = 0 ;  i < dates.length ; i++)
-        {
-            System.out.println("Dates " + i + " : " + dates[i]);
-        }
-        System.out.println("null_able : " + null_able);
+        return dates;
     }
 
     @Url(class_method = "Person-count")

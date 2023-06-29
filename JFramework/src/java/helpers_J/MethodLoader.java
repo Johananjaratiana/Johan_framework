@@ -1,5 +1,6 @@
 package helpers_J;
 
+import annotation_J.restAPI;
 import etu1933.framework.Mapping;
 import etu1933.framework.Singleton;
 import etu1933.framework.view.ModelView;
@@ -11,7 +12,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Enumeration;
 import java.util.HashMap;
-import helpers_J.MyCast;
 
 /**
  *
@@ -27,6 +27,9 @@ public class MethodLoader
         {
             Class<?> class_temp = Class.forName(mapping.getClassName());
             Method method = getMethod(class_temp, mapping.getMethod());
+
+            if(method.getReturnType() != ModelView.class)return null;
+
             Object instance = Singleton.getOrInitSingleton(Singletons, class_temp.getName());
 
             // Chaque classe devrait avoir une constructeur vide
@@ -58,6 +61,56 @@ public class MethodLoader
                 modelview = (ModelView) method.invoke(instance);
             }
             return modelview;
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public static Object load_function_Json(String user_session_name,Mapping mapping, HashMap<String,Object> Singletons, HttpServletRequest request, HttpServletResponse response)throws Exception
+    {
+        if(mapping == null)return null;
+
+        try
+        {
+            Class<?> class_temp = Class.forName(mapping.getClassName());
+            Method method = getMethod(class_temp, mapping.getMethod());
+
+            if(!method.isAnnotationPresent(restAPI.class))return null;
+
+            Object instance = Singleton.getOrInitSingleton(Singletons, class_temp.getName());
+
+            // Chaque classe devrait avoir une constructeur vide
+            if(instance == null)instance = class_temp.getDeclaredConstructor().newInstance();
+
+            // Les classes qui ont besion de session doivent creer une HashMap<String, Object> sessionname :
+            MySession.SetRequiredSession(user_session_name, instance, method,request);
+
+            Object[] args = null;
+            Object returning = null;
+
+            if (request.getParameterNames().hasMoreElements())
+            {
+                if (instance == null) instance = class_temp.getDeclaredConstructor().newInstance();
+                Enumeration<String> parameterNames = request.getParameterNames();
+
+                while (parameterNames.hasMoreElements())
+                {
+                    String paramName = parameterNames.nextElement();
+                    MyCast.verified_casting_and_set(class_temp, paramName, instance, request.getParameter(paramName));
+                }
+
+                String[] methodParamsName = methodParamsName(method);
+                args = methodArgs(method.getParameterTypes(), methodParamsName, request);
+                returning = method.invoke(instance, args);
+            }
+            else
+            {
+                returning = method.invoke(instance);
+            }
+            return returning;
         }
         catch (Exception ex)
         {
