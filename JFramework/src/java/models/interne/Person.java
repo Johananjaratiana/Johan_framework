@@ -3,8 +3,10 @@ package models.interne;
 import annotation_J.*;
 import etu1933.framework.view.ModelView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Scope(SingleTon = false)
 public class Person
@@ -47,14 +49,22 @@ public class Person
     public void setAdresse(Float adresse) {
         this.adresse = adresse;
     }
-    
+
+    @Session(sessionNames = {"user_session"})
     @Url(class_method = "Person-find_all")
+    @Auth(name = {"admin"})
     public ModelView find_all()
     {
-        ModelView mv = new ModelView();
-        String[] personne = new String[]{"Johan", "Logan"};
+        String P1 = null;
+        Object p1 = this.sessions.get("user_session");
+        if(p1 == null)P1 = "Aucune user_session";
+        else P1 = (String) p1;
+        String[] personne = new String[]{P1, "Logan"};
+        List<String> rs = new ArrayList<>();
+        rs.add("user_session");
 
-        mv.setJson(true);
+        ModelView mv = new ModelView();
+        mv.setRemoveSession(rs);
         mv.additem("Personne", personne); // Data
         mv.setView("page1.jsp"); // Page
         return mv;

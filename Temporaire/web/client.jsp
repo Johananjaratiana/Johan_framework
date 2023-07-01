@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-    String session = request.getSession().getAttribute("createdSession");
-    String attributs = request.getAttribute("requiredSession");
+    String session___ = (String) session.getAttribute("createdSession");
+    String attributs = (String) request.getAttribute("requiredSession");
 %>
 <!DOCTYPE html>
 <html>
@@ -11,5 +11,5 @@
 </head>
 <body>
     <h1>Client access is success</h1>
-    <p>With session sending : <%= createdSession%></p>
+    <p>With session sending : <%= session___+" - - "+attributs%></p>
 </body>

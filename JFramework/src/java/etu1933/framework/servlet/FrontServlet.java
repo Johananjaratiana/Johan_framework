@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,6 +92,14 @@ public class FrontServlet extends HttpServlet
             throw new Exception(ex.getMessage() + " Json trying is null");
         }
     }
+    private void RemoveSessionByList(List<String> removeSession, HttpServletRequest request)
+    {
+        if(removeSession == null)return;
+        for(String sessionR:removeSession)
+        {
+            request.getSession().removeAttribute(sessionR);
+        }
+    }
     private boolean TryModelView(Mapping mapping,HttpServletRequest request, HttpServletResponse response)throws Exception
     {
         try
@@ -100,6 +109,11 @@ public class FrontServlet extends HttpServlet
 
             if(modelview == null)return false;
 
+            MySession.NewSession(modelview.getSession(), request);                  // Ajout de session
+
+            if(modelview.isInvalidateSession())request.getSession().invalidate();   // Invalidation du session
+            if(modelview.getRemoveSession().size() != 0)RemoveSessionByList(modelview.getRemoveSession(), request);
+
             if(modelview.isJson() == true)
             {
                 LoadJSON(modelview.getData(), response);
@@ -107,8 +121,7 @@ public class FrontServlet extends HttpServlet
                 return false;
             }
 
-            MySession.NewSession(modelview.getSession(), request);      // Ajout de session
-            modelview.sendData(request);                                // Envoie du data
+            modelview.sendData(request);                                            // Envoie du data
             String page = modelview.getView();
             RequestDispatcher dispatcher = request.getRequestDispatcher(page);
             dispatcher.include(request, response);

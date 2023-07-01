@@ -1,13 +1,19 @@
 package etu1933.framework.view;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 public class ModelView
 {
     String view;
     HashMap<String, Object> data;
     HashMap<String, Object> session;
+
+    boolean invalidateSession = false;
+
+    List<String> removeSession = new ArrayList<>();
     boolean isJson = false;
 
     public boolean isJson() {  return isJson;}
@@ -67,5 +73,21 @@ public class ModelView
         this.getData().forEach((key, value) -> {
             request.setAttribute(key, value);
         });
+    }
+
+    public boolean isInvalidateSession() {
+        return invalidateSession;
+    }
+
+    public void setInvalidateSession(boolean invalidateSession) {
+        this.invalidateSession = invalidateSession;
+    }
+
+    public List<String> getRemoveSession() {
+        return removeSession;
+    }
+
+    public void setRemoveSession(List<String> removeSession) {
+        this.removeSession = removeSession;
     }
 }
