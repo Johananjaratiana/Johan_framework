@@ -12,6 +12,8 @@
 
     <div class="container">
 
+        <a href="Login-Documentation">Documentation</a>
+
         <div class="row" style="padding-block: 5%;">
             <form action="Login-change" method="get" class="row col-md-10">
                 <h1 class="col-md-6">User` s type : <span style="color: green;"><%= session.getAttribute("authentification")%></span></h1>

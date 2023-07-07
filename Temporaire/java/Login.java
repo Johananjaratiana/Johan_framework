@@ -5,7 +5,8 @@ import annotation_J.Scope;
 import annotation_J.Session;
 import annotation_J.Url;
 import etu1933.framework.view.ModelView;
-
+import models.interne.Person;
+import myConnection.MyConnection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,13 +16,37 @@ public class Login
 {
     HashMap<String, Object> sessions;
 
+    @Url(class_method = "Login-Documentation")
+    public ModelView Documentation()
+    {
+        ModelView modelView = new ModelView();
+        modelView.setView("documentation.jsp");
+        return modelView;
+    }
+
+    @Url(class_method = "Login-index")
+    public ModelView index()
+    {
+        ModelView modelView = new ModelView();
+        modelView.setView("index.jsp");
+        return modelView;
+    }
+
     @Url(class_method = "Login-log")
     public ModelView log(String name, String email, String password)
     {
         ModelView modelView = new ModelView();
 
-        if(this.ConnectAsAdmin(name, email, password, modelView))return modelView;
-        if(this.ConnectedAsClient(name, modelView))return modelView;
+        try
+        {
+            if(this.ConnectAsAdmin(email, password, modelView))return modelView;
+            if(this.ConnectedAsClient(email, password, modelView))return modelView;
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            modelView.additem("error", ex.getMessage());
+        }
         
         modelView.setView("index.jsp");
         return modelView;
@@ -70,10 +95,20 @@ public class Login
         return modelView;
     }
 
-    private boolean ConnectAsAdmin(String name, String email, String password, ModelView modelView)
+    private boolean ConnectAsAdmin(String email, String password, ModelView modelView)throws Exception
     {
-        if(name.compareTo("Johan") == 0 && email.compareTo("johan@gmail.com") == 0 && password.compareTo("johan") == 0)
+        if(email.compareTo("johan@gmail.com") == 0 && password.compareTo("johan") == 0)
         {
+            try
+            {
+                Person person = MyConnection.GetPersonByEmail_and_Mdp(email, password);
+                if(person == null)return false;
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+                throw new Exception(ex.getMessage());
+            }
             modelView.addSession("isConnected", new Object());
             modelView.addSession("authentification", "admin");
             modelView.addSession("temporary", "Coucou toi");
@@ -83,10 +118,20 @@ public class Login
         return false;
     }
     
-    private boolean ConnectedAsClient(String name, ModelView modelView)
+    private boolean ConnectedAsClient(String email, String password, ModelView modelView)throws Exception
     {
-        if(name.compareTo("Logan") == 0)
+        if(email.compareTo("logan@gmail.com") == 0 && password.compareTo("logan") == 0)
         {
+            try
+            {
+                Person person = MyConnection.GetPersonByEmail_and_Mdp(email, password);
+                if(person == null)return false;
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+                throw new Exception(ex.getMessage());
+            }
             modelView.addSession("isConnected", new Object());
             modelView.addSession("authentification", "client");
             modelView.addSession("temporary", "Coucou toi");

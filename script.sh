@@ -28,6 +28,9 @@ cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/servlet-api.jar "$lib
 cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/asm-9.2.jar "$lib_path"
 cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/gson/gson-2.10.jar "$lib_path"
 
+cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/postgresql.jar "$lib_path"
+cp /home/johan/Documents/Programmation/Java/Librairie_JAVA/postgresql-42.5.0.jar "$lib_path"
+
 # Compiler les fichiers .java vers la "classes_path"   /  *: specifie tout les .jar present et /: tout les .classe deja compile
 javac 						-d "${classes_path}" "${java_path}/annotation_J/Url.java"			                -Xlint -Xdiags:verbose
 javac 						-d "${classes_path}" "${java_path}/annotation_J/Scope.java"			                -Xlint -Xdiags:verbose

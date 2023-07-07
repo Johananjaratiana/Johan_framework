@@ -7,6 +7,7 @@ import annotation_J.Url;
 import annotation_J.restAPI;
 import etu1933.framework.view.ModelView;
 
+import myConnection.MyConnection;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -15,11 +16,36 @@ public class Person
 {
     HashMap<String, Object> sessions;
 
+    Integer idperson;
+
     String nom;
+
+    String email;
+
+    String profile;
+
+    String mdp;
+
 
     public Person(){}
 
     public Person(String nom){this.nom = nom;}
+
+    public Person(String email, String motDePasse, String profile)
+    {
+        this.email = email;
+        this.mdp = motDePasse;
+        this.profile = profile;
+    }
+
+    public Integer getIdPerson()
+    {
+        return this.idperson;
+    }
+    public String getProfile()
+    {
+        return this.profile;
+    }
     
     @Url(class_method = "Person-ReceiveData")
     @Auth(name = {"admin"})
@@ -81,6 +107,35 @@ public class Person
         modelView.additem("Json data", persons);
         modelView.setJson(true);
 
+        return modelView;
+    }
+
+    @Url(class_method = "Person-Register")
+    public ModelView Register()
+    {
+        ModelView modelView = new ModelView();
+
+        modelView.setView("register.jsp");
+        return modelView;
+    }
+
+    @Url(class_method = "Person-Save")
+    public ModelView Save(String nom, String email, String mdp, String profile)
+    {
+        ModelView modelView = new ModelView();
+
+        try 
+        {
+            MyConnection.AddPerson(nom, email, mdp, profile);
+        }
+        catch(Exception e)
+        {
+            modelView.additem("error_", e.getMessage());
+            modelView.setView("register.jsp");
+            return modelView;
+        }
+
+        modelView.setView("index.jsp");
         return modelView;
     }
 }
